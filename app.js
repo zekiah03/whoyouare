@@ -478,7 +478,7 @@ const cards = [
     type: 'interlude',
     actNum: 'Act Ⅴ',
     actName: '見 え て き た 形',
-    text: 'これは、他人の理論では、ない。\n<span class="rust">あなたの回答が、つくった、あなたの理論</span>だ。',
+    text: 'あなたが答えた、30問。\nそれは、<span class="rust">あなたという人の、輪郭</span>だ。\n\nこれから、それを、見てみる。',
   },
   {
     id: 'map',
@@ -486,9 +486,14 @@ const cards = [
     type: 'map',
   },
   {
-    id: 'synthesis',
+    id: 'analysis',
     act: 5,
-    type: 'synthesis',
+    type: 'analysis',
+  },
+  {
+    id: 'portrait',
+    act: 5,
+    type: 'portrait',
   },
   {
     id: 'final',
@@ -604,14 +609,17 @@ function render() {
     `;
   } else if (card.type === 'map') {
     el.innerHTML = renderMap();
-  } else if (card.type === 'synthesis') {
-    el.innerHTML = renderSynthesis();
+  } else if (card.type === 'analysis') {
+    el.innerHTML = renderAnalysis();
+  } else if (card.type === 'portrait') {
+    el.innerHTML = renderPortrait();
   } else if (card.type === 'final') {
     el.innerHTML = `
       <div class="sigil">${card.sigil}</div>
-      <p class="final-lead">あなたは、壊れない。<br>壊れるのは、<span class="rust">入れ物だけだ。</span></p>
-      <p class="final-line">——だから、今から、<br><span class="rust">自分を残せ。</span></p>
-      <p class="final-sub">日記でも、文章でも、写真でも、声でも。<br>何が十分かは、誰にも、まだ、分からない。<br>分かっているのは、始められるのは、今しかない、ということだけ。</p>
+      <p class="final-lead">あなたは、答えた。<br>三十の問いに、<span class="rust">あなたのやり方で</span>、答えた。</p>
+      <p class="final-sub">矛盾していても、よかった。<br>揺れていても、よかった。<br>慎重でも、大胆でも、よかった。<br>——どれも、あなただ。</p>
+      <p class="final-line">ここにいる、<br><span class="rust">あなたが、十分だ。</span></p>
+      <p class="final-note">この先、何を信じるかは、あなたが決めていい。<br>何も、信じなくても、いい。<br>答えた、という時間は、もう、あなたの中にある。</p>
       <p class="welcome">—— お か え り 。</p>
       <button class="reset" id="btn-reset">最初から、もう一度</button>
     `;
@@ -751,6 +759,195 @@ function computeRadicalScore() {
     if (w >= 0) score += w;
   });
   return { score, max, ratio: max > 0 ? score / max : 0 };
+}
+
+// =================== DEEP ANALYSIS ===================
+const DIMENSIONS = {
+  body: {
+    title: '身 体 観',
+    desc: '自分とは、身体なのか、それとも、パターンなのか',
+    low: '身体こそ、自分',
+    high: 'パターンこそ、自分',
+    items: [
+      { id: 'q4', w: 1 }, { id: 'q11', w: 1 }, { id: 'q14', w: 1 },
+      { id: 'ax1', w: 1 }, { id: 'ax5', w: 1.5 },
+    ],
+  },
+  time: {
+    title: '時 間 観',
+    desc: '過去の自分と、今の自分は、同じ人か',
+    low: '時間を貫く、一人',
+    high: '毎瞬、別の人',
+    items: [
+      { id: 'q1', w: 1 }, { id: 'q2', w: 1 }, { id: 'q3', w: 1 },
+      { id: 'q13', w: 1 }, { id: 'q19', w: 1 }, { id: 'ax6', w: 1.5 },
+    ],
+  },
+  other: {
+    title: '他 者 と の 境 界',
+    desc: '自分とそっくりな存在を、自分の仲間と認めるか',
+    low: '中身が違えば、別物',
+    high: '区別がつかないなら、同じ',
+    items: [
+      { id: 'q9', w: 1 }, { id: 'q10', w: 1 }, { id: 'q12', w: 1 },
+      { id: 'q15', w: 1 }, { id: 'q17', w: 1 }, { id: 'ax4', w: 1.5 },
+    ],
+  },
+  will: {
+    title: '意 志 と 感 情',
+    desc: '意志や感情は、あなたのものか、環境が動かしたものか',
+    low: '私の中から',
+    high: '環境の中から',
+    items: [
+      { id: 'q5', w: 1 }, { id: 'q6', w: 1 }, { id: 'ax2', w: 1.5 },
+    ],
+  },
+  death: {
+    title: '死 と 、 続 き',
+    desc: '身体が終わった後も、「あなた」は続き得るか',
+    low: '身体と共に、終わる',
+    high: 'パターンが残れば、続く',
+    items: [
+      { id: 'q18', w: 1 }, { id: 'q21', w: 1.5 }, { id: 'ax3', w: 1 },
+    ],
+  },
+};
+
+function computeDimensions() {
+  const result = {};
+  for (const [key, dim] of Object.entries(DIMENSIONS)) {
+    let score = 0, max = 0, answered = 0;
+    dim.items.forEach(it => {
+      const card = cards.find(c => c.id === it.id);
+      if (!card) return;
+      const mr = Math.max(...card.choices.map(ch => ch.radical || 0));
+      max += mr * it.w;
+      const ans = state.answers[card.id];
+      if (ans) {
+        const ch = card.choices.find(c => c.key === ans);
+        if (ch) { score += (ch.radical || 0) * it.w; answered++; }
+      }
+    });
+    result[key] = {
+      ...dim,
+      score, max, answered,
+      ratio: max > 0 ? score / max : 0.5,
+    };
+  }
+  return result;
+}
+
+function computeUncertainty() {
+  const keys = ['unknown', 'maybe', 'hesitate', 'depends', 'conditional'];
+  let unc = 0, total = 0;
+  Object.entries(state.answers).forEach(([id, k]) => {
+    total++;
+    if (keys.includes(k)) unc++;
+  });
+  return { count: unc, total, ratio: total > 0 ? unc / total : 0 };
+}
+
+function leanText(ratio, low, high) {
+  if (ratio < 0.25) return `強く、<span class="rust">${low}</span>。`;
+  if (ratio < 0.45) return `どちらかと言えば、<span class="rust">${low}</span>。`;
+  if (ratio < 0.55) return `<span class="rust">${low}</span> と <span class="rust">${high}</span> の、ちょうど、間。`;
+  if (ratio < 0.75) return `どちらかと言えば、<span class="rust">${high}</span>。`;
+  return `強く、<span class="rust">${high}</span>。`;
+}
+
+function dimBar(ratio) {
+  const pct = Math.max(0, Math.min(100, ratio * 100));
+  return `
+    <div class="dim-bar">
+      <div class="dim-bar-track">
+        <div class="dim-bar-marker" style="left: ${pct}%"></div>
+      </div>
+    </div>
+  `;
+}
+
+function renderAnalysis() {
+  const dims = computeDimensions();
+  const unc = computeUncertainty();
+
+  const rows = Object.entries(dims).map(([key, d]) => `
+    <div class="dim-row">
+      <div class="dim-head">
+        <span class="dim-title">${d.title}</span>
+        <span class="dim-desc">${d.desc}</span>
+      </div>
+      ${dimBar(d.ratio)}
+      <div class="dim-ends">
+        <span class="dim-end-low">${d.low}</span>
+        <span class="dim-end-high">${d.high}</span>
+      </div>
+      <p class="dim-lean">${leanText(d.ratio, d.low, d.high)}</p>
+    </div>
+  `).join('');
+
+  let uncLean;
+  if (unc.ratio < 0.15) uncLean = 'あなたは、<span class="rust">迷わずに、答えた</span>。自分の内側に、明確な基準があった。';
+  else if (unc.ratio < 0.35) uncLean = 'あなたは、<span class="rust">概ね明確に、答えた</span>。時々、保留を選んだ。それは、誠実さの表れかもしれない。';
+  else if (unc.ratio < 0.6) uncLean = 'あなたは、<span class="rust">多くの場面で、保留を選んだ</span>。結論を急がない——それは、思考の深さの形だ。';
+  else uncLean = 'あなたは、<span class="rust">ほとんどの問いに、「分からない」で答えた</span>。安易に答えを出さない強さが、そこにある。';
+
+  return `
+    <p class="q-meta"><span class="q-meta-act">Act Ⅴ</span><span class="q-meta-sep">·</span>分 析</p>
+    <h2 class="ana-title">あなたを、<br><span class="rust">五つの方向から、見てみる</span>。</h2>
+    <div class="ana-grid">${rows}</div>
+    <div class="ana-uncertainty">
+      <p class="ana-unc-head">迷 い の、か た ち</p>
+      <p class="ana-unc-body">${uncLean}</p>
+      <p class="ana-unc-meta">(${unc.count} / ${unc.total} 問で、「分からない」「迷う」「条件付き」を選んだ)</p>
+    </div>
+  `;
+}
+
+function renderPortrait() {
+  const dims = computeDimensions();
+  const { ratio: uncR } = computeUncertainty();
+  const avg = Object.values(dims).reduce((a, b) => a + b.ratio, 0) / Object.values(dims).length;
+  const variance = Object.values(dims).reduce((a, b) => a + Math.pow(b.ratio - avg, 2), 0) / Object.values(dims).length;
+  const consistency = 1 - Math.sqrt(variance) * 2;
+
+  const highest = Object.entries(dims).reduce((a, b) => b[1].ratio > a[1].ratio ? b : a);
+  const lowest = Object.entries(dims).reduce((a, b) => b[1].ratio < a[1].ratio ? b : a);
+
+  let archetype, archetypeBody;
+  if (avg >= 0.7 && consistency > 0.5) {
+    archetype = '徹 底 し た、 パ タ ー ン 主 義 者';
+    archetypeBody = 'あなたは、ほぼすべての問いで、「自分とはパターンである」という側に、答えた。ブレが、少ない。この理論を、あなたは、もう、<span class="rust">自分のもの</span>にしている。';
+  } else if (avg <= 0.3 && consistency > 0.5) {
+    archetype = '一 貫 し た、 身 体 派';
+    archetypeBody = 'あなたは、ほぼすべての問いで、「身体こそ自分」という側に、答えた。ブレが、少ない。あなたにとって、自分とは、確かに<span class="rust">この手、この声、この体温</span>のことだ。';
+  } else if (uncR >= 0.5) {
+    archetype = '答 え を 急 が な い、 思 索 者';
+    archetypeBody = 'あなたは、半分以上の問いに、保留を選んだ。それは、逃げではない。<span class="rust">分からないものを、分からないまま、持ち歩ける強さ</span>だ。';
+  } else if (consistency < 0.3) {
+    archetype = '場 面 で、 揺 れ る 人';
+    archetypeBody = 'あなたの答えは、次元ごとに、大きく揺れた。ある場面では大胆、別の場面では慎重。——これは、矛盾ではない。<span class="rust">一つの問いに、一つの答えで向き合った</span>、正直さだ。';
+  } else if (avg >= 0.55) {
+    archetype = '傾 き つ つ、 立 ち 止 ま れ る 人';
+    archetypeBody = 'あなたは、パターン側に、傾いている。でも、全てを飲み込んではいない。<span class="rust">惹かれるのと、信じるのは、別だ</span>——その距離を、あなたは、保っている。';
+  } else if (avg <= 0.45) {
+    archetype = '守 り つ つ、 揺 れ を 認 め る 人';
+    archetypeBody = 'あなたは、身体を中心に、自分を考えている。それでも、いくつかの問いで、揺れた。<span class="rust">揺れを、拒まなかった</span>——それは、硬い人には、できない。';
+  } else {
+    archetype = '境 目 に、 立 つ 人';
+    archetypeBody = 'あなたは、パターンと身体、時間の一貫と分岐、区別の「同じ」と「違う」——<span class="rust">その全ての境目に、立っている</span>。決めないこと、それ自体が、あなたの答えだ。';
+  }
+
+  const strongDim = highest[1].ratio - lowest[1].ratio > 0.3
+    ? `<p class="port-line">特に、<span class="rust">${highest[1].title.replace(/ /g, '')}</span> では大胆な答えを、<span class="rust">${lowest[1].title.replace(/ /g, '')}</span> では慎重な答えを、選んだ。この二つの間に、あなたの、考えの重心がある。</p>`
+    : `<p class="port-line">五つの次元で、答えは、<span class="rust">比較的、そろっていた</span>。あなたの中には、自分の「自分観」についての、一貫した骨格がある。</p>`;
+
+  return `
+    <p class="q-meta"><span class="q-meta-act">Act Ⅴ</span><span class="q-meta-sep">·</span>あ な た と い う 人</p>
+    <h2 class="port-tag">あなたは、<br><span class="rust">${archetype}</span>。</h2>
+    <p class="port-body">${archetypeBody}</p>
+    ${strongDim}
+    <p class="port-foot">——この分析は、<span class="rust">あなたの答えだけから</span>、導かれた。<br>他の誰のものでもない。</p>
+  `;
 }
 
 function renderSynthesis() {
