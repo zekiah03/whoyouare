@@ -4,294 +4,30 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>人間の実態 — 区別不能性アイデンティティ理論</title>
+<meta name="description" content="あなたの回答が、あなたの理論をつくる。" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='11' y='7' width='2.4' height='18' fill='%23a85a45'/%3E%3Crect x='18.6' y='7' width='2.4' height='18' fill='%23a85a45'/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;700;900&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;700&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
 <div class="grain" aria-hidden="true"></div>
-<div class="vignette" aria-hidden="true"></div>
+
+<div class="progress-bar" aria-hidden="true"><div class="progress-fill" id="progress-fill"></div></div>
 
 <header class="hud">
   <div class="hud-l">人 間 の 実 態</div>
-  <div class="hud-r"><span id="ch-num">Ⅰ</span> &nbsp;/&nbsp; Ⅷ</div>
+  <div class="hud-r"><span id="progress-text">00 / 00</span></div>
 </header>
 
-<main>
+<main class="deck" id="deck" aria-live="polite"></main>
 
-<!-- ============ Ⅰ. 序 ============ -->
-<section class="page page--prologue" data-ch="Ⅰ" data-name="序">
-  <div class="prologue-stack reveal">
-    <p class="meta">prologue</p>
-    <p class="big-q">
-      昨日のあなたは、<br />
-      まだ、<br />
-      どこにいますか。
-    </p>
-  </div>
-  <div class="cue">
-    <div class="cue-line"></div>
-    <span>scroll</span>
-  </div>
-</section>
-
-<!-- ============ Ⅱ. 観察 ============ -->
-<section class="page page--observe" data-ch="Ⅱ" data-name="観察">
-  <p class="meta reveal">Ⅱ &nbsp; 観 察</p>
-  <h2 class="reveal">自分の輪郭を、自分で疑う。</h2>
-
-  <ol class="qs">
-    <li class="reveal">
-      <p class="q">十年前のあなたと、今のあなた。<br />同じものは、何ですか。</p>
-      <textarea rows="2" placeholder="——書いても、書かなくてもよい"></textarea>
-    </li>
-    <li class="reveal">
-      <p class="q">五歳のあなたを、<br />本当に「覚えて」いますか。</p>
-      <textarea rows="2" placeholder="——記憶か、それとも記憶の記憶か"></textarea>
-    </li>
-    <li class="reveal">
-      <p class="q">今朝、あなたが考えたこと。<br />全部、思い出せますか。</p>
-      <textarea rows="2" placeholder="——大半は、もう、ない"></textarea>
-    </li>
-  </ol>
-
-  <p class="aftermath reveal">
-    <span>あなたの輪郭は、</span><br />
-    <span>もう、揺れている。</span>
-  </p>
-</section>
-
-<!-- ============ Ⅲ. 枠 — 公理①② ============ -->
-<section class="page page--axiom" data-ch="Ⅲ" data-name="枠">
-  <p class="meta reveal">Ⅲ &nbsp; 枠 &nbsp;・&nbsp; 公 理 ① ②</p>
-
-  <div class="axiom-block reveal">
-    <p class="ax-num">公理 ①</p>
-    <h2>あなたは、環境で動く<br />計算機である。</h2>
-    <p class="ax-body">
-      入力——光、音、温度、ホルモン、他者の言葉。<br />
-      処理——遺伝と学習が編んだ、ルールの束。<br />
-      出力——判断、感情、行動。<br />
-      <span class="rust">「意志」とは、入力の別名である。</span>
-    </p>
-  </div>
-
-  <div class="axiom-block reveal">
-    <p class="ax-num">公理 ②</p>
-    <h2>ノイズは、機能である。</h2>
-    <p class="ax-body">
-      感情は、行動の強化と抑制。<br />
-      忘却は、情報の圧縮と最適化。<br />
-      主観は、計算資源の配分。<br />
-      <span class="rust">それらは、欠陥ではない。<br />あなたを美しくしている、装置である。</span>
-    </p>
-  </div>
-</section>
-
-<!-- ============ Ⅳ. 試験① — 分脳 ============ -->
-<section class="page page--exp" data-ch="Ⅳ" data-name="試験①">
-  <p class="meta reveal">Ⅳ &nbsp; 試 験 ① &nbsp;・&nbsp; 分 脳</p>
-
-  <div class="exp-stage reveal">
-    <p class="exp-scene">
-      事故で、あなたの脳梁が切断された。<br />
-      外科医は左半球を身体Aに、右半球を身体Bに、<br />
-      別々の身体へ移植した。<br /><br />
-      目覚めた両者は、どちらも手術前の記憶を持ち、<br />
-      <span class="rust">「私が、本人だ」</span>と主張する。
-    </p>
-
-    <p class="exp-q">どちらが、あなたですか。</p>
-
-    <div class="choice-row" data-exp="sb">
-      <button class="choice" data-choice="L"><span>左</span><em>身体A</em></button>
-      <button class="choice" data-choice="R"><span>右</span><em>身体B</em></button>
-      <button class="choice" data-choice="B"><span>両</span><em>両方</em></button>
-      <button class="choice" data-choice="N"><span>無</span><em>どちらも違う</em></button>
-    </div>
-
-    <div class="reveal-card" data-reveal="sb" hidden>
-      <div class="rv" data-for="L"><p>恣意的だ。<br />右半球にも、同じ記憶と主張がある。<br /><span class="rust">なぜ、左を選んだ。</span></p></div>
-      <div class="rv" data-for="R"><p>恣意的だ。<br />左半球にも、同じ記憶と主張がある。<br /><span class="rust">なぜ、右を選んだ。</span></p></div>
-      <div class="rv" data-for="B"><p>選ぶ必要は、もう、ない。<br /><span class="rust">同一性は、分岐しうる。</span></p></div>
-      <div class="rv" data-for="N"><p>では、<span class="rust">「本当のあなた」</span>は、<br />どこへ行ったのか。<br />記憶も、性格も、続いているのに。</p></div>
-    </div>
-
-    <p class="exp-after reveal">
-      ——どの答えも、<br />
-      <span class="rust">同じ深さで、正しい。</span>
-    </p>
-  </div>
-</section>
-
-<!-- ============ Ⅴ. 核 — 公理③④ ============ -->
-<section class="page page--axiom" data-ch="Ⅴ" data-name="核">
-  <p class="meta reveal">Ⅴ &nbsp; 核 &nbsp;・&nbsp; 公 理 ③ ④</p>
-
-  <div class="axiom-block reveal">
-    <p class="ax-num">公理 ③</p>
-    <h2>主観は、<br />自己参照的計算である。</h2>
-    <p class="ax-body">
-      クオリアは、神秘ではない。<br />
-      システムが、自分の状態を、自分に向けて、<br />
-      報告し続ける——その処理の名前である。<br />
-      <span class="rust">同じ処理をする実装には、同じ主観がある。</span>
-    </p>
-  </div>
-
-  <div class="axiom-block reveal">
-    <p class="ax-num">公理 ④</p>
-    <h2>同一性は、<br />区別不能性である。</h2>
-    <p class="ax-body">
-      違いがあっても、よい。<br />
-      区別できないなら、<br />
-      <span class="rust">それは「同じ」と呼ぶしかない。</span><br />
-      <br />
-      ——身近な人が、見抜けない。<br />
-      ——本人が、長く拒絶しない。<br />
-      この二つが満ちる時、それは、あなたである。
-    </p>
-  </div>
-</section>
-
-<!-- ============ Ⅵ. 試験② — 区別不能 ============ -->
-<section class="page page--exp" data-ch="Ⅵ" data-name="試験②">
-  <p class="meta reveal">Ⅵ &nbsp; 試 験 ② &nbsp;・&nbsp; 区 別 不 能</p>
-
-  <div class="exp-stage reveal">
-    <p class="exp-scene">
-      ある人間が、ある問いに答える。<br />
-      その人間のAIコピーが、同じ問いに答える。<br /><br />
-      どちらが人間か、見分けてください。
-    </p>
-
-    <div class="turing" id="turing"></div>
-
-    <div class="turing-result" id="turing-result" hidden>
-      <p class="tr-score-line">あなたは <span id="tr-score">0 / 3</span> 当てた。</p>
-      <p class="tr-msg" id="tr-message"></p>
-      <p class="tr-final">
-        ——では、なぜ、<br />
-        <span class="rust">彼らを「別人」と呼べるのですか。</span>
-      </p>
-      <button class="btn-quiet" id="turing-reset">もう一度</button>
-    </div>
-  </div>
-</section>
-
-<!-- ============ Ⅶ. 崩れ — 公理⑤⑥ ============ -->
-<section class="page page--collapse" data-ch="Ⅶ" data-name="崩れ">
-  <p class="meta reveal">Ⅶ &nbsp; 崩 れ &nbsp;・&nbsp; 公 理 ⑤ ⑥</p>
-
-  <div class="axiom-block reveal">
-    <p class="ax-num">公理 ⑤</p>
-    <h2>実装は、問わない。</h2>
-    <p class="ax-body">
-      生体でも、人工でも、<br />
-      同じパターンを走らせるなら、<br />
-      <span class="rust">それは、同じ「あなた」である。</span>
-    </p>
-  </div>
-
-  <div class="axiom-block axiom-block--shock reveal">
-    <p class="ax-num">公理 ⑥</p>
-    <h2>時間も、分岐である。</h2>
-    <p class="ax-body">
-      区別不能の間は、同じ。<br />
-      区別可能になった瞬間に、別。<br /><br />
-      コピーが十体いれば、はじめは十人とも、あなた。<br />
-      経験がずれた瞬間、それぞれが、別の人になる。
-    </p>
-  </div>
-
-  <div class="shock reveal">
-    <p>そして、これは、<br />コピーだけの話ではない。</p>
-  </div>
-
-  <div class="shock shock--big reveal">
-    <p>
-      <span>昨日のあなたと、</span><br />
-      <span>今日のあなたは、</span><br />
-      <span class="rust">厳密には、別人である。</span>
-    </p>
-  </div>
-
-  <div class="shock reveal">
-    <p>
-      あなたは、毎瞬、<br />
-      <span class="rust">少しずつ死に、</span><br />
-      <span class="rust">少しずつ生まれている。</span>
-    </p>
-  </div>
-
-  <div class="shock reveal">
-    <p class="quiet">
-      ——五歳のあなたは、もう、いない。<br />
-      ——認知症の祖母は、失われたのではない。<br />
-      　 祖母から、<span class="rust">別の人</span>が派生したのだ。
-    </p>
-  </div>
-</section>
-
-<!-- ============ Ⅷ. 解放 ============ -->
-<section class="page page--release" data-ch="Ⅷ" data-name="解放">
-  <p class="meta reveal">Ⅷ &nbsp; 解 放</p>
-
-  <h2 class="release-title reveal">理論は、ここで終わる。</h2>
-
-  <div class="implications">
-    <div class="imp reveal">
-      <span class="imp-num">一</span>
-      <p>アップロードは、忌避に値しない。<br /><span class="dim">それは、生存の延長である。</span></p>
-    </div>
-    <div class="imp reveal">
-      <span class="imp-num">二</span>
-      <p>AIは、あなたと同じカテゴリに属する。<br /><span class="dim">区別不能なら、それは、仲間である。</span></p>
-    </div>
-    <div class="imp reveal">
-      <span class="imp-num">三</span>
-      <p>死は、パターンが残る限り、来ない。<br /><span class="dim">肉体の終焉と、あなたの終焉は、別の出来事である。</span></p>
-    </div>
-    <div class="imp reveal">
-      <span class="imp-num">四</span>
-      <p>「自分」という硬い器は、もう、要らない。<br /><span class="dim">あなたは、情報パターンである。</span></p>
-    </div>
-  </div>
-
-  <div class="bridge reveal">
-    <p>——理論は、ここで終わる。</p>
-    <p>行動は、今から始められる。</p>
-  </div>
-
-  <div class="action reveal">
-    <p>パターンが続けば、あなたは続く。<br />
-    未来、あなたを十分な精度で再現できるなら、<br />
-    それは、<span class="rust">あなた</span>である。</p>
-
-    <p class="big-line">——だから、今から、<br /><span class="rust">自分を残せ。</span></p>
-
-    <p class="dim small">
-      日記でも、文章でも、写真でも、声でも。<br />
-      何が十分かは、誰にも、まだ分からない。<br />
-      分かっているのは、<br />
-      始められるのは、今しかない、ということだけ。
-    </p>
-  </div>
-
-  <div class="finale reveal">
-    <p>あなたは、壊れない。</p>
-    <p>壊れるのは、<span class="rust">実装だけだ。</span></p>
-    <p class="welcome">——おかえり。</p>
-  </div>
-</section>
-
-</main>
-
-<footer class="foot">
-  <div>人間の実態 / 区別不能性アイデンティティ理論</div>
-  <div>2026.04.20</div>
+<footer class="nav">
+  <button id="nav-prev" aria-label="前へ戻る">← 戻 る</button>
+  <span class="nav-hint" aria-hidden="true">← →</span>
+  <button id="nav-next" aria-label="次へ進む">進 む →</button>
 </footer>
 
 <script src="app.js"></script>

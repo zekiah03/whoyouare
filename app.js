@@ -1,169 +1,271 @@
-// =================== REVEAL ON SCROLL ===================
-(() => {
-  const targets = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries) => {
-    for (const e of entries) {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        io.unobserve(e.target);
-      }
-    }
-  }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
-  targets.forEach(t => io.observe(t));
-})();
+// =================== DATA ===================
+const cards = [
+  {
+    id: 'opening',
+    act: 0,
+    type: 'opening',
+    sigil: '々',
+    title: '人 間 の 実 態',
+    subtitle: '区別不能性アイデンティティ理論',
+    lead: 'これは、読み物ではない。<br>あなたの回答が、<span class="rust">あなたの理論</span>をつくる。',
+    startLabel: 'はじめる',
+  },
+  {
+    id: 'act1-intro',
+    act: 1,
+    type: 'interlude',
+    actNum: 'Act Ⅰ',
+    actName: '診 断',
+    text: 'あなたは今、何を信じているか。\n——まず、自分の輪郭を、自分で確かめる。',
+  },
+  {
+    id: 'q1',
+    act: 1,
+    type: 'question',
+    prompt: '昨日のあなたは、\nまだ、あなたですか。',
+    choices: [
+      { key: 'yes', label: 'はい', radical: 0, reply: '——では、十年前のあなたも、同じ理屈で、あなたですか。' },
+      { key: 'no', label: 'いいえ', radical: 2, reply: '——では、今朝のあなたは。一時間前のあなたは。どこに、境界があるのか。' },
+      { key: 'unknown', label: '分からない', radical: 1, reply: '——その<span class="rust">"分からなさ"</span>が、この旅の、出発点だ。' },
+    ],
+  },
+  {
+    id: 'q2',
+    act: 1,
+    type: 'question',
+    prompt: '十年前のあなたと、\n今のあなた。\n同じ人ですか。',
+    choices: [
+      { key: 'same', label: '同じ', radical: 0, reply: '——細胞は入れ替わり、記憶は書き換わった。それでも「同じ」と言える根拠は、どこに。' },
+      { key: 'other', label: '別人', radical: 2, reply: '——では、あなたは十年で、<span class="rust">何度、死んだ</span>のか。' },
+      { key: 'unknown', label: '分からない', radical: 1, reply: '——境界は、もう、ぼやけ始めている。' },
+    ],
+  },
+  {
+    id: 'q3',
+    act: 1,
+    type: 'question',
+    prompt: '眠っている間、\nあなたは存在していますか。',
+    choices: [
+      { key: 'yes', label: 'している', radical: 1, reply: '——意識のない時間にも、あなたは続くという。根拠は、身体の継続か、それともパターンの保存か。' },
+      { key: 'no', label: '止まっている', radical: 2, reply: '——では毎朝、同じあなたが、本当に、再起動しているのか。' },
+      { key: 'unknown', label: '分からない', radical: 1, reply: '——夢は、<span class="rust">誰が、見ている</span>のか。' },
+    ],
+  },
+  {
+    id: 'q4',
+    act: 1,
+    type: 'question',
+    prompt: 'あなたの本体は、\nどこにありますか。',
+    choices: [
+      { key: 'brain', label: '脳', radical: 1, reply: '——では、記憶を保存したクラウドは、あなたの一部になり得るか。' },
+      { key: 'body', label: '身体全体', radical: 0, reply: '——移植された心臓は、誰のものか。切断された指は、まだあなたか。' },
+      { key: 'pattern', label: '情報そのもの', radical: 2, reply: '——それは、<span class="rust">実装を問わない</span>、という宣言だ。' },
+      { key: 'unknown', label: '分からない', radical: 1, reply: '——境界は、まだ、見えていない。' },
+    ],
+  },
+  {
+    id: 'q5',
+    act: 1,
+    type: 'question',
+    prompt: 'あなたの意志は、\nどこから来ますか。',
+    choices: [
+      { key: 'self', label: '私自身から', radical: 0, reply: '——では、"私自身"は、どこから生まれたか。' },
+      { key: 'env', label: '環境と遺伝から', radical: 2, reply: '——ならば「あなたが決めた」と呼べる瞬間は、どこにも、ない。' },
+      { key: 'both', label: '両方', radical: 1, reply: '——その境目は、どこで、誰が、引くのか。' },
+      { key: 'unknown', label: '分からない', radical: 1, reply: '——決定の根を、まだ、辿っていない。' },
+    ],
+  },
+  {
+    id: 'q6',
+    act: 1,
+    type: 'question',
+    prompt: '感情は、あなたの\n欠陥ですか、機能ですか。',
+    choices: [
+      { key: 'bug', label: '欠陥', radical: 0, reply: '——では、感情を切除したあなたは、<span class="rust">まだ、あなたか</span>。' },
+      { key: 'feature', label: '機能', radical: 2, reply: '——ならば感情は、あなたという計算の、装置である。' },
+      { key: 'both', label: '両方', radical: 1, reply: '——使い道のある欠陥、と言ってもいい。' },
+    ],
+  },
+  {
+    id: 'q7',
+    act: 1,
+    type: 'question',
+    prompt: '五歳のあなたを、\n本当に"覚えて"いますか。',
+    choices: [
+      { key: 'yes', label: '覚えている', radical: 0, reply: '——映像か、物語か。あなたが今もっているのは、どちらだ。' },
+      { key: 'meta', label: '記憶の記憶だ', radical: 2, reply: '——五歳のあなたは、もう、あなたの中にはいない。<span class="rust">派生した別の人</span>の、断片だけがある。' },
+      { key: 'no', label: '覚えていない', radical: 2, reply: '——では、五歳のあなたは、どこへ行ったのか。' },
+    ],
+  },
+  {
+    id: 'act1-end',
+    act: 1,
+    type: 'interlude',
+    actNum: 'Act Ⅰ · 完',
+    actName: '輪 郭 は 、 揺 れ て い る',
+    text: 'あなたは、自分の輪郭を、\n自分で疑い始めた。\n\n——次は、試練。',
+  },
+  {
+    id: 'wip',
+    act: 2,
+    type: 'interlude',
+    actNum: 'Act Ⅱ — Ⅴ',
+    actName: '準 備 中',
+    text: 'この旅は、段階的に完成していく。\n\n——まもなく、直観を揺さぶる試練が、届く。',
+  },
+];
 
-// =================== HUD CHAPTER TRACKER ===================
-(() => {
-  const pages = [...document.querySelectorAll('.page')];
-  const numEl = document.getElementById('ch-num');
-  if (!numEl || !pages.length) return;
-  const romans = ['Ⅰ', 'Ⅱ', 'Ⅲ', 'Ⅳ', 'Ⅴ', 'Ⅵ', 'Ⅶ', 'Ⅷ'];
+// =================== STATE ===================
+const STORAGE_KEY = 'ningen-v3';
+const defaultState = () => ({ idx: 0, answers: {}, radical: 0 });
 
-  const visibility = new Map();
-  const io = new IntersectionObserver((entries) => {
-    for (const e of entries) {
-      visibility.set(e.target, e.intersectionRatio);
-    }
-    let bestIdx = 0;
-    let bestRatio = -1;
-    pages.forEach((p, i) => {
-      const r = visibility.get(p) || 0;
-      if (r > bestRatio) { bestRatio = r; bestIdx = i; }
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (typeof parsed.idx !== 'number' || !parsed.answers) return null;
+    if (parsed.idx >= cards.length) parsed.idx = cards.length - 1;
+    return parsed;
+  } catch (e) { return null; }
+}
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+}
+
+const state = loadState() || defaultState();
+
+// =================== DOM ===================
+const deck = document.getElementById('deck');
+const progressFill = document.getElementById('progress-fill');
+const progressText = document.getElementById('progress-text');
+const navPrev = document.getElementById('nav-prev');
+const navNext = document.getElementById('nav-next');
+
+// =================== RENDER ===================
+const actRoman = ['', 'Ⅰ', 'Ⅱ', 'Ⅲ', 'Ⅳ', 'Ⅴ'];
+const choiceMarks = ['a', 'b', 'c', 'd'];
+
+function nl2br(s) { return s.replace(/\n/g, '<br>'); }
+
+function render() {
+  const card = cards[state.idx];
+  deck.innerHTML = '';
+  const el = document.createElement('article');
+  el.className = `card card--${card.type}`;
+
+  if (card.type === 'opening') {
+    el.innerHTML = `
+      <div class="sigil">${card.sigil}</div>
+      <h1 class="title">${card.title}</h1>
+      <p class="subtitle">${card.subtitle}</p>
+      <p class="lead">${card.lead}</p>
+      <button class="start" id="btn-start">${card.startLabel}</button>
+    `;
+  } else if (card.type === 'interlude') {
+    el.innerHTML = `
+      <p class="act-num">${card.actNum}</p>
+      <h2 class="act-name">${card.actName}</h2>
+      <p class="text">${card.text}</p>
+    `;
+  } else if (card.type === 'question') {
+    const answered = state.answers[card.id];
+    const qNum = questionNumber(card.id);
+    const qTotal = questionTotal();
+    el.innerHTML = `
+      <p class="q-meta"><span class="q-meta-act">Act ${actRoman[card.act]}</span><span class="q-meta-sep">·</span>問 ${qNum} / ${qTotal}</p>
+      <h2 class="prompt">${nl2br(card.prompt)}</h2>
+      <div class="choices">
+        ${card.choices.map((c, i) => {
+          const isPicked = answered === c.key;
+          const cls = isPicked ? 'picked' : (answered ? 'dim' : '');
+          return `
+            <button class="choice ${cls}" data-key="${c.key}" ${answered ? 'disabled' : ''}>
+              <span class="choice-mark">${choiceMarks[i]}</span><span>${c.label}</span>
+            </button>
+          `;
+        }).join('')}
+      </div>
+      ${answered ? `<div class="reply visible"><p>${card.choices.find(c => c.key === answered).reply}</p></div>` : ''}
+    `;
+  }
+
+  deck.appendChild(el);
+  requestAnimationFrame(() => el.classList.add('active'));
+
+  if (card.type === 'opening') {
+    const startBtn = el.querySelector('#btn-start');
+    startBtn?.addEventListener('click', advance);
+  } else if (card.type === 'question' && !state.answers[card.id]) {
+    el.querySelectorAll('.choice').forEach(btn => {
+      btn.addEventListener('click', () => pickChoice(card, btn.dataset.key));
     });
-    numEl.textContent = romans[bestIdx] || romans[0];
-  }, {
-    threshold: [0, 0.25, 0.5, 0.75, 1],
-    rootMargin: '-40% 0px -40% 0px',
-  });
-  pages.forEach(p => io.observe(p));
-})();
+  }
 
-// =================== SPLIT BRAIN ===================
-(() => {
-  const row = document.querySelector('.choice-row[data-exp="sb"]');
-  if (!row) return;
-  const reveal = document.querySelector('.reveal-card[data-reveal="sb"]');
-  row.querySelectorAll('.choice').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const picked = btn.dataset.choice;
-      row.querySelectorAll('.choice').forEach(b => {
-        b.classList.toggle('picked', b === btn);
-        b.classList.toggle('dim', b !== btn);
-      });
-      if (reveal) {
-        reveal.hidden = false;
-        reveal.querySelectorAll('.rv').forEach(c => {
-          c.style.display = c.dataset.for === picked ? 'block' : 'none';
-        });
-      }
-    });
-  });
-})();
+  updateChrome(card);
+}
 
-// =================== TURING (INDISTINGUISHABILITY) ===================
-(() => {
-  const box = document.getElementById('turing');
-  const resultBox = document.getElementById('turing-result');
-  const resetBtn = document.getElementById('turing-reset');
-  if (!box) return;
+function updateChrome(card) {
+  const isFirst = state.idx === 0;
+  const isLast = state.idx === cards.length - 1;
+  const needsAnswer = card.type === 'question' && !state.answers[card.id];
 
-  const rounds = [
-    {
-      prompt: '朝、目覚めた瞬間に感じたこと。',
-      a: '窓の光がブラインドに縞を作っていた。頭はまだ起きておらず、昨夜の夢の残りを探したが、もう、消えていた。',
-      b: '目を開けた瞬間、光が網膜に入り、夢の断片は言葉になる前に蒸発した。私は、失くしたものの形だけを覚えていた。',
-      human: 'a',
-    },
-    {
-      prompt: '死ぬのが怖いと感じる瞬間。',
-      a: '夜、誰にも気づかれずに消える自分を想像したとき。記憶も習慣も誰にも引き継がれずに、ただ無音で終わる可能性が、怖い。',
-      b: '自分の記憶にアクセスできなくなること、それを誰も代替できないこと。固有性の喪失が、最も恐ろしい。',
-      human: 'b',
-    },
-    {
-      prompt: '「自分」とは何か、一文で。',
-      a: '自分とは、他人の視線と自分の記憶の、絶えない書き換え合いの場である。',
-      b: '自分とは、過去の連続と、それを語り続ける今の声の、重なりのこと。',
-      human: 'a',
-    },
-  ];
+  navPrev.disabled = isFirst;
+  navPrev.style.visibility = card.type === 'opening' ? 'hidden' : 'visible';
+  navNext.disabled = needsAnswer || isLast;
+  navNext.style.visibility = card.type === 'opening' ? 'hidden' : 'visible';
 
-  let current = 0;
-  let correct = 0;
-  const picks = [];
+  const total = cards.length;
+  const pct = total > 1 ? (state.idx / (total - 1)) * 100 : 0;
+  progressFill.style.width = `${pct}%`;
+  progressText.textContent = `${String(state.idx + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
+}
 
-  const render = () => {
-    box.innerHTML = '';
-    rounds.forEach((r, idx) => {
-      if (idx > current) return;
-      const el = document.createElement('div');
-      el.className = 't-round' + (idx < current ? ' done' : '');
-      el.innerHTML = `
-        <div class="t-head">
-          <span>round ${String(idx + 1).padStart(2, '0')} / ${String(rounds.length).padStart(2, '0')}</span>
-          <span>人間を、見抜け</span>
-        </div>
-        <p class="t-prompt">お題 ——&nbsp; ${r.prompt}</p>
-        <div class="t-pair">
-          <button class="t-opt" data-pick="a"><span class="t-label">A</span>${r.a}</button>
-          <button class="t-opt" data-pick="b"><span class="t-label">B</span>${r.b}</button>
-        </div>
-      `;
-      box.appendChild(el);
+function questionNumber(id) {
+  let n = 0;
+  for (const c of cards) {
+    if (c.type === 'question') n++;
+    if (c.id === id) return n;
+  }
+  return n;
+}
+function questionTotal() {
+  return cards.filter(c => c.type === 'question').length;
+}
 
-      if (idx === current) {
-        const picked = picks[idx];
-        if (picked) {
-          el.querySelectorAll('.t-opt').forEach(o => {
-            const isHuman = o.dataset.pick === r.human;
-            const isPicked = o.dataset.pick === picked;
-            if (isHuman && isPicked) o.classList.add('correct');
-            else if (isHuman && !isPicked) o.classList.add('correct');
-            else if (!isHuman && isPicked) o.classList.add('wrong');
-            else o.classList.add('wrong');
-            if (!isPicked && !isHuman) o.classList.add('dim');
-          });
-          const info = document.createElement('p');
-          info.className = 't-reveal';
-          info.textContent = `人間は ${r.human.toUpperCase()} — AIコピーは ${r.human === 'a' ? 'B' : 'A'}`;
-          el.appendChild(info);
-        } else {
-          el.querySelectorAll('.t-opt').forEach(o => {
-            o.addEventListener('click', () => {
-              picks[idx] = o.dataset.pick;
-              if (o.dataset.pick === r.human) correct++;
-              render();
-              setTimeout(() => {
-                if (current < rounds.length - 1) {
-                  current++;
-                  render();
-                } else {
-                  showResult();
-                }
-              }, 2000);
-            });
-          });
-        }
-      }
-    });
-  };
-
-  const showResult = () => {
-    document.getElementById('tr-score').textContent = `${correct} / ${rounds.length}`;
-    const msg = document.getElementById('tr-message');
-    if (correct === 0) msg.textContent = '——一度も見抜けなかった。あなたは、AIを、人間として受け取った。';
-    else if (correct === rounds.length) msg.textContent = '——今回は、見抜けた。では、次の三問も、その次も、見抜き続けられるか。';
-    else msg.textContent = '——ある発言は区別できた。ある発言は、できなかった。';
-    resultBox.hidden = false;
-  };
-
-  resetBtn?.addEventListener('click', () => {
-    current = 0;
-    correct = 0;
-    picks.length = 0;
-    resultBox.hidden = true;
-    render();
-  });
-
+// =================== ACTIONS ===================
+function pickChoice(card, key) {
+  state.answers[card.id] = key;
+  const choice = card.choices.find(c => c.key === key);
+  if (choice) state.radical += choice.radical || 0;
+  saveState();
   render();
-})();
+}
+function advance() {
+  if (state.idx < cards.length - 1) {
+    state.idx++;
+    saveState();
+    render();
+  }
+}
+function retreat() {
+  if (state.idx > 0) {
+    state.idx--;
+    saveState();
+    render();
+  }
+}
+
+navPrev.addEventListener('click', retreat);
+navNext.addEventListener('click', advance);
+
+document.addEventListener('keydown', (e) => {
+  if (e.target && (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT')) return;
+  if (e.key === 'ArrowRight' || e.key === 'Enter' || e.key === ' ') {
+    if (!navNext.disabled) { e.preventDefault(); advance(); }
+  } else if (e.key === 'ArrowLeft') {
+    if (!navPrev.disabled) { e.preventDefault(); retreat(); }
+  }
+});
+
+render();
