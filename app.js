@@ -16,19 +16,26 @@
 (() => {
   const pages = [...document.querySelectorAll('.page')];
   const numEl = document.getElementById('ch-num');
+  if (!numEl || !pages.length) return;
   const romans = ['Ⅰ', 'Ⅱ', 'Ⅲ', 'Ⅳ', 'Ⅴ', 'Ⅵ', 'Ⅶ', 'Ⅷ'];
 
-  const update = () => {
-    const mid = window.innerHeight * 0.5;
-    let idx = 0;
+  const visibility = new Map();
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      visibility.set(e.target, e.intersectionRatio);
+    }
+    let bestIdx = 0;
+    let bestRatio = -1;
     pages.forEach((p, i) => {
-      const r = p.getBoundingClientRect();
-      if (r.top <= mid) idx = i;
+      const r = visibility.get(p) || 0;
+      if (r > bestRatio) { bestRatio = r; bestIdx = i; }
     });
-    if (numEl) numEl.textContent = romans[idx] || romans[0];
-  };
-  window.addEventListener('scroll', update, { passive: true });
-  update();
+    numEl.textContent = romans[bestIdx] || romans[0];
+  }, {
+    threshold: [0, 0.25, 0.5, 0.75, 1],
+    rootMargin: '-40% 0px -40% 0px',
+  });
+  pages.forEach(p => io.observe(p));
 })();
 
 // =================== SPLIT BRAIN ===================
