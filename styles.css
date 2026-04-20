@@ -115,6 +115,19 @@ body {
 .q-meta .q-meta-sep { color: var(--mute); margin: 0 0.8em; }
 .q-meta .q-meta-act { color: var(--rust); }
 
+.q-lead {
+  font-family: var(--serif);
+  font-size: clamp(0.95rem, 1.3vw, 1.05rem);
+  color: var(--ink-mid);
+  line-height: 2.2;
+  letter-spacing: 0.05em;
+  margin-bottom: 2rem;
+  padding: 0 0 0 1.3rem;
+  border-left: 1px solid var(--mute);
+  font-style: normal;
+}
+.q-lead .rust { color: var(--rust); }
+
 .prompt {
   font-family: var(--serif);
   font-size: clamp(1.4rem, 2.6vw, 1.9rem);

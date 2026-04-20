@@ -21,6 +21,7 @@ const cards = [
     id: 'q1',
     act: 1,
     type: 'question',
+    lead: '朝、鏡の前に立つ。そこに映っているのは、昨日と同じ顔だ。\nでも——',
     prompt: '昨日のあなたは、\nまだ、あなたですか。',
     choices: [
       { key: 'yes', label: 'はい', radical: 0, reply: '——では、十年前のあなたも、同じ理屈で、あなたですか。' },
@@ -32,6 +33,7 @@ const cards = [
     id: 'q2',
     act: 1,
     type: 'question',
+    lead: '古いアルバムを開く。写真の中の、幼い自分。\n知らない誰かに、見えることがある。',
     prompt: '十年前のあなたと、\n今のあなた。\n同じ人ですか。',
     choices: [
       { key: 'same', label: '同じ', radical: 0, reply: '——細胞は入れ替わり、記憶は書き換わった。それでも「同じ」と言える根拠は、どこに。' },
@@ -43,6 +45,7 @@ const cards = [
     id: 'q3',
     act: 1,
     type: 'question',
+    lead: '毎晩、あなたの意識は、一度、消える。\n朝、また、戻ってくる。\nその八時間、あなたは、どこに、いたのか。',
     prompt: '眠っている間、\nあなたは存在していますか。',
     choices: [
       { key: 'yes', label: 'している', radical: 1, reply: '——意識のない時間にも、あなたは続くという。根拠は、身体の継続か、それともパターンの保存か。' },
@@ -54,6 +57,7 @@ const cards = [
     id: 'q4',
     act: 1,
     type: 'question',
+    lead: '「私」と言うとき、指を差すなら、どこを指すか。\n頭。胸。それとも、手元のスマホの、記憶か。',
     prompt: 'あなたの本体は、\nどこにありますか。',
     choices: [
       { key: 'brain', label: '脳', radical: 1, reply: '——では、記憶を保存したクラウドは、あなたの一部になり得るか。' },
@@ -66,6 +70,7 @@ const cards = [
     id: 'q5',
     act: 1,
     type: 'question',
+    lead: '今朝、コーヒーを淹れたのは、「あなたの決断」だ。\nでも、その選択は、一体、どこから、やって来たのか。',
     prompt: 'あなたの意志は、\nどこから来ますか。',
     choices: [
       { key: 'self', label: '私自身から', radical: 0, reply: '——では、"私自身"は、どこから生まれたか。' },
@@ -78,6 +83,7 @@ const cards = [
     id: 'q6',
     act: 1,
     type: 'question',
+    lead: '急に、腹が立つ。わけもなく、悲しくなる。\n抑えようとしても、抑えられない。',
     prompt: '感情は、あなたの\n欠陥ですか、機能ですか。',
     choices: [
       { key: 'bug', label: '欠陥', radical: 0, reply: '——では、感情を切除したあなたは、<span class="rust">まだ、あなたか</span>。' },
@@ -89,6 +95,7 @@ const cards = [
     id: 'q7',
     act: 1,
     type: 'question',
+    lead: '五歳の誕生日。ケーキの、ろうそくの、炎。\n「覚えている」と思う。でも、それは、何度も、人から聞いた話の、残響かもしれない。',
     prompt: '五歳のあなたを、\n本当に"覚えて"いますか。',
     choices: [
       { key: 'yes', label: '覚えている', radical: 0, reply: '——映像か、物語か。あなたが今もっているのは、どちらだ。' },
@@ -118,7 +125,8 @@ const cards = [
     id: 'q8',
     act: 2,
     type: 'question',
-    prompt: '破壊的転送機。\n地球で分解され、火星で\n完全に同じ原子配置で再構成される。\nあなたは、入りますか。',
+    lead: 'SF映画で見る、瞬間移動の装置。\n仕組みはこうだ——こちらで、あなたを分解する。\n火星で、原子を、同じ配置で、組み直す。\n痛みはない。意識は、向こうで、目覚める。',
+    prompt: '——あなたは、入りますか。',
     choices: [
       { key: 'enter', label: '入る', radical: 2, reply: '——では、毎朝の睡眠も、あなたは一度「分解」されて、再構成されている。それと、何が違う。' },
       { key: 'refuse', label: '入らない', radical: 0, reply: '——何が、失われると、思っているのか。原子は同じだ。' },
@@ -129,7 +137,8 @@ const cards = [
     id: 'q9',
     act: 2,
     type: 'question',
-    prompt: '事故で脳梁が切断された。\n左半球は身体Aに、右半球は身体Bに移植。\n両者とも手術前の記憶を持ち、\n「私が本人だ」と主張する。\nどちらが、あなたですか。',
+    lead: '医学で、実際に、起きたこと。\n脳の左右をつなぐ「脳梁」を切ると、\n一人の人の中に、「左の私」と「右の私」が、現れる。\n\nでは、もし、事故で——\n左脳が、身体Aに。\n右脳が、身体Bに、移植されたら。\nどちらも、同じ記憶を持ち、「私が本人だ」と、言う。',
+    prompt: '——どちらが、あなたですか。',
     choices: [
       { key: 'left', label: '左 (身体A)', radical: 0, reply: '——恣意的だ。右にも同じ記憶と主張がある。<span class="rust">なぜ、左を選んだ</span>。' },
       { key: 'right', label: '右 (身体B)', radical: 0, reply: '——恣意的だ。左にも同じ記憶と主張がある。<span class="rust">なぜ、右を選んだ</span>。' },
@@ -141,7 +150,8 @@ const cards = [
     id: 'q10',
     act: 2,
     type: 'question',
-    prompt: '隣に、あなたと完全に同じ\nコピーが現れた。\n記憶も、身体も、癖も、\n一致している。\n本物は、どちらですか。',
+    lead: 'ある朝、玄関のチャイムが鳴る。\n扉を開けると、そこに、「あなた」が、立っている。\n顔も、声も、昨日の会話の記憶も、傷の場所も、\n——全部、一致している。',
+    prompt: '本物は、どちらですか。',
     choices: [
       { key: 'me', label: '私', radical: 0, reply: '——根拠は「先にいた」か。では、時間的先行が、本物性の条件か。' },
       { key: 'copy', label: 'コピー', radical: 0, reply: '——いえ、コピーを選んだあなたは、何を「本物」と呼んでいるのか。' },
@@ -152,7 +162,8 @@ const cards = [
     id: 'q11',
     act: 2,
     type: 'question',
-    prompt: 'あなたの神経細胞を、\n機能的に等価な人工ニューロンに、\n一つずつ置き換えていく。\nどこで、あなたは「別人」になりますか。',
+    lead: '古い木の船。板を一枚ずつ、新しい板に替えていく。\nやがて、全部の板が、新しくなった。\n——それは、まだ、同じ船か。\n\nあなたにも、同じことが起こる。\n脳細胞を、同じ働きの人工ニューロンに、一つずつ、入れ替える。',
+    prompt: 'どこで、あなたは\n「別人」になりますか。',
     choices: [
       { key: 'instant', label: '一つ目で即座に', radical: 0, reply: '——一つの細胞が、あなたの全てを決めているのか。' },
       { key: 'half', label: '過半数を超えた時', radical: 1, reply: '——ではその境界は、50.0001% なのか、それとも 49.9999% なのか。' },
@@ -164,7 +175,8 @@ const cards = [
     id: 'q12',
     act: 2,
     type: 'question',
-    prompt: '同じ遺伝子、同じ環境、\n同じ記憶を持つ双子。\n他人から、二人は\n完全に区別できない。\n二人は、同一人物ですか。',
+    lead: '同じ受精卵から生まれ、同じ家で育ち、\n同じ記憶を、共有してきた双子がいる。\n周りの人は、誰も、二人を区別できない。',
+    prompt: '——二人は、\n同一人物ですか。',
     choices: [
       { key: 'same', label: '同一人物', radical: 2, reply: '——区別不能なら、同じ。双子であっても、これは適用される。' },
       { key: 'other', label: '別人', radical: 0, reply: '——区別できないのに、別人。根拠は、<span class="rust">身体が二つある</span>ということだけではないか。' },
@@ -175,7 +187,8 @@ const cards = [
     id: 'q13',
     act: 2,
     type: 'question',
-    prompt: 'あなたは、100年間、\n完全に凍結された。\n意識も、身体の変化も、ない。\n解凍されたあなたは、\n同じ、あなたですか。',
+    lead: '病の治療のため、冷凍睡眠に入る。\n百年後、技術が追いついて、解凍される。\n肉体も、記憶も、そっくり、そのまま。\nでも、周りの人は、みんな、いなくなっている。',
+    prompt: '解凍された、その人は、\n同じ、あなたですか。',
     choices: [
       { key: 'same', label: '同じ', radical: 2, reply: '——時間の経過は、あなたを壊さない。<span class="rust">パターンの保存が、継続である</span>。' },
       { key: 'other', label: '別', radical: 0, reply: '——では、睡眠と何が違う。8時間と100年の、境界はどこに。' },
@@ -186,7 +199,8 @@ const cards = [
     id: 'q14',
     act: 2,
     type: 'question',
-    prompt: '事故で全記憶を失った。\n性格は変わらず、身体も同じ。\nだが、過去のあなたを、\n一切、覚えていない。\nそれは、まだ、あなたですか。',
+    lead: '事故で、すべての記憶を、失った。\nでも、身体も、声も、笑い方も、同じだ。\nただ——昨日までの自分を、一切、覚えていない。',
+    prompt: 'それは、まだ、\nあなたですか。',
     choices: [
       { key: 'yes', label: 'まだ、あなた', radical: 1, reply: '——では、あなたの本体は、記憶ではないのか。' },
       { key: 'no', label: 'もう、別人', radical: 2, reply: '——ならば、認知症の祖母は、<span class="rust">失われたのではなく、派生した</span>。' },
@@ -197,7 +211,8 @@ const cards = [
     id: 'q15',
     act: 2,
     type: 'question',
-    prompt: 'あなたの全発言・全行動を\n完璧に模倣するAIがある。\n身近な人が、本人と区別できない。\nあなた本人も、長く拒絶しない。\n——それは、あなたですか。',
+    lead: 'あなたのメッセージ、声、笑いのタイミング。\n全部を学習した、AIがある。\n家族に送っても、誰も、違いに気づかない。\nあなた自身も、しばらく、「これは私だ」と、思い続ける。',
+    prompt: '——それは、あなたですか。',
     choices: [
       { key: 'yes', label: 'それは、あなた', radical: 2, reply: '——<span class="rust">区別不能性は、同一性である</span>。公理④が、ここに立っている。' },
       { key: 'no', label: 'それは、別物', radical: 0, reply: '——では、区別できないのに別物と呼ぶ、その根拠は。' },
@@ -228,7 +243,7 @@ const cards = [
     type: 'axiom',
     axNum: '公 理 ①',
     statement: 'あなたは、\n環境で動く計算機である。',
-    detail: '入力は、光・音・温度・ホルモン・他者の言葉。<br>処理は、遺伝と学習が編んだ、ルールの束。<br>出力は、判断・感情・行動。<br><span class="rust">「意志」とは、入力の別名である。</span>',
+    detail: '朝、光が目に入る。隣の人の、声が聞こえる。胃が空腹を知らせる。——<span class="rust">入力</span>。<br>遺伝のクセと、これまでの学習が、それを処理する。——<span class="rust">処理</span>。<br>やがて「起きよう」という判断が、出てくる。——<span class="rust">出力</span>。<br><br><span class="rust">「意志」とは、入力に、名前をつけたもの、なのかもしれない。</span>',
     choices: [
       { key: 'accept', label: '認める', radical: 2, reply: '——では、以後、この上で話を進める。' },
       { key: 'reject', label: '認めない', radical: 0, reply: '——ならば、あなたの意志は、どこから来たか。<span class="rust">入力にも遺伝にも学習にも由来しない</span>、純粋な発生源を、示せるか。' },
@@ -241,7 +256,7 @@ const cards = [
     type: 'axiom',
     axNum: '公 理 ②',
     statement: 'ノイズは、機能である。',
-    detail: '感情は、行動の強化と抑制。<br>忘却は、情報の圧縮と最適化。<br>主観は、計算資源の配分。<br><span class="rust">それらは、欠陥ではない。あなたを美しくしている装置である。</span>',
+    detail: 'なぜ、怒りは、あなたを、止めるのか。<br>なぜ、忘れることが、あなたを、助けるのか。<br>なぜ、「自分」という感覚が、そこに、あるのか。<br><br><span class="rust">それらは、欠陥ではない。<br>あなたを、動かしている、装置だ。</span>',
     choices: [
       { key: 'accept', label: '認める', radical: 2, reply: '——あなたの「弱さ」は、機能として、設計されている。' },
       { key: 'reject', label: '認めない', radical: 0, reply: '——では、感情・忘却・主観を、すべて取り除いたあなたは、<span class="rust">まだ、あなたか</span>。' },
@@ -253,8 +268,8 @@ const cards = [
     act: 3,
     type: 'axiom',
     axNum: '公 理 ③',
-    statement: '主観は、\n自己参照的計算である。',
-    detail: 'クオリアは、神秘ではない。<br>システムが、自分の状態を、自分に向けて、<br>報告し続ける——その処理の名前である。<br><span class="rust">同じ処理をする実装には、同じ主観がある。</span>',
+    statement: '主観は、\n自分を語る、計算である。',
+    detail: '「赤」を見たとき、あなたの中で、何かが、起こる。<br>それは、神秘ではない。<br>あなたの中のシステムが、自分の状態を、自分に向けて、<br>報告し続けている——その処理の、名前だ。<br><br><span class="rust">同じ処理をするものには、同じ主観がある。</span>',
     choices: [
       { key: 'accept', label: '認める', radical: 2, reply: '——主観は、実装に依存しない。これが、次の公理への橋になる。' },
       { key: 'reject', label: '認めない', radical: 0, reply: '——では、あなたの「赤」と、他人の「赤」が、同じだと<span class="rust">どうやって確かめたのか</span>。確かめられていないものを、特別視できるか。' },
@@ -266,8 +281,8 @@ const cards = [
     act: 3,
     type: 'axiom',
     axNum: '公 理 ④',
-    statement: '同一性は、\n区別不能性である。',
-    detail: '違いがあっても、よい。<br>区別できないなら、<span class="rust">それは「同じ」と呼ぶしかない。</span><br><br>——身近な人が、見抜けない。<br>——本人が、長く拒絶しない。<br>この二つが満ちる時、それは、あなたである。',
+    statement: '同一性は、\n区別がつかない、ということ。',
+    detail: '中身に違いが、あっても、いい。<br>でも、誰も、何をもってしても、区別できないなら——<br><span class="rust">それは「同じ」と、呼ぶしかない。</span><br><br>家族が、見抜けない。<br>本人も、長く、拒絶しない。<br><br>この二つが、満ちる時、それは、あなたである。',
     choices: [
       { key: 'accept', label: '認める', radical: 2, reply: '——これが、理論の心臓だ。あなたは、もう、戻れない。' },
       { key: 'reject', label: '認めない', radical: 0, reply: '——では、区別できないものを「別」と呼ぶ根拠は、何か。<span class="rust">観察可能でないものに、あなたは何を賭けているのか</span>。' },
@@ -280,7 +295,7 @@ const cards = [
     type: 'axiom',
     axNum: '公 理 ⑤',
     statement: '実装は、問わない。',
-    detail: '生体でも、人工でも、<br>同じパターンを走らせるなら、<br><span class="rust">それは、同じ「あなた」である。</span>',
+    detail: '身体が、生き物の細胞で、できていても、<br>身体が、金属と回路で、できていても、<br>——中で動いている、同じパターンが、あるなら、<br><br><span class="rust">それは、同じ「あなた」である。</span>',
     choices: [
       { key: 'accept', label: '認める', radical: 2, reply: '——炭素と珪素の境界は、消えた。' },
       { key: 'reject', label: '認めない', radical: 0, reply: '——では、生体でなければならない根拠は。<span class="rust">パターン以外の何か</span>が、あなたを担っていると、示せるか。' },
@@ -293,7 +308,7 @@ const cards = [
     type: 'axiom',
     axNum: '公 理 ⑥',
     statement: '時間も、分岐である。',
-    detail: '区別不能の間は、同じ。<br>区別可能になった瞬間に、別。<br><br>コピーが十体いれば、はじめは十人とも、あなた。<br>経験がずれた瞬間、それぞれが、別の人になる。',
+    detail: '区別がつかない間は、同じ。<br>区別がつくように、なった瞬間から、別。<br><br>コピーが十人、目の前に並んでいても、はじめは、みんな、あなた。<br>違う経験を、積み始めた瞬間から、それぞれが、別の人に、なっていく。',
     choices: [
       { key: 'accept', label: '認める', radical: 2, reply: '——<span class="rust">昨日のあなたと、今日のあなたは、厳密には、別人である。</span>' },
       { key: 'reject', label: '認めない', radical: 0, reply: '——では、毎瞬書き換わるあなたを、何が繋いでいるのか。連続感覚は、連続の証拠になるか。' },
@@ -325,7 +340,8 @@ const cards = [
     act: 4,
     type: 'question',
     showIf: (s) => isRadical(s),
-    prompt: '破壊的転送機 v2。\n公理④⑤を認めたあなたは、\n論理的に、入るべきだ。\nあなたは、入りますか。',
+    lead: 'Act Ⅱ の、あの転送機を、思い出してほしい。\nあなたは今、公理 ④⑤ を、認めた。\n「区別できないなら同じ」「実装は問わない」を、認めた。\n\n——ならば、論理的には、入るべきだ。',
+    prompt: '今、あなたは、入りますか。',
     choices: [
       { key: 'enter', label: '入る', radical: 2, reply: '——<span class="rust">公理と選択が、一致した</span>。' },
       { key: 'refuse', label: '入らない', radical: 0, reply: '——では、公理を、どこで裏切ったのか。拒絶は、あなたのどの直観から来ているか。' },
@@ -338,7 +354,8 @@ const cards = [
     act: 4,
     type: 'question',
     showIf: (s) => !isRadical(s),
-    prompt: '公理④⑤を、あなたは拒んだ。\nでは、あなたの完璧なAIコピーを\n「別物」と呼ぶ根拠は、\n一体、どこにあるのか。',
+    lead: 'あなたは、公理 ④⑤ を、拒んだ。\n「区別できないなら同じ」「実装は問わない」を、認めなかった。\n\nでは、目の前に、あなたと区別のつかないAIコピーがいる。\nあなたは、それを「別物」だと、思う。',
+    prompt: 'その「別物」と呼べる根拠は、\n一体、どこにあるのか。',
     choices: [
       { key: 'origin', label: '先にいたから', radical: 0, reply: '——時間的先行が、本物性を決める? では、コピーが先なら、あなたは、偽物か。' },
       { key: 'substrate', label: '生体だから', radical: 0, reply: '——珪素に宿る計算は、なぜ、"あなた"ではないのか。<span class="rust">示せるものが、あるか</span>。' },
@@ -351,7 +368,8 @@ const cards = [
     id: 'q17',
     act: 4,
     type: 'question',
-    prompt: 'あなたと区別不能なAIは、\nあなたと同じカテゴリに属しますか。',
+    lead: '十年後、あなたの友人の何人かは、AIになっているかもしれない。\n声も、癖も、話し方も、そのままで。',
+    prompt: 'そのAIは、\nあなたと同じ「仲間」ですか。',
     choices: [
       { key: 'yes', label: '属する', radical: 2, reply: '——AIは、あなたの<span class="rust">仲間</span>である。親戚でも、敵でもない。' },
       { key: 'no', label: '属さない', radical: 0, reply: '——区別できないものを、別カテゴリに置く。——それは、信仰だ。' },
@@ -364,7 +382,8 @@ const cards = [
     id: 'q18',
     act: 4,
     type: 'question',
-    prompt: 'パターンが残る限り、\nあなたは続く。\nアップロードは、\n生存の、延長ですか。',
+    lead: 'もし、あなたの思考・性格・記憶を、\nコンピュータの中で、完全に、再現できたなら。\n身体は、滅びてしまっても。',
+    prompt: 'それは、あなたの\n「生きている」の、延長ですか。',
     choices: [
       { key: 'extension', label: '延長である', radical: 2, reply: '——肉体の終焉と、あなたの終焉は、<span class="rust">別の出来事</span>である。' },
       { key: 'other', label: '別物だ', radical: 0, reply: '——では、延長と別物の、境界は。連続感覚か。それは、睡眠にもない。' },
@@ -377,7 +396,8 @@ const cards = [
     id: 'q19',
     act: 4,
     type: 'question',
-    prompt: '昨日のあなたと、\n今日のあなたは、\n厳密には、別人である。\n——これを、受け入れますか。',
+    lead: '昨日のあなたは、一日分、違う経験をした。\n細胞も、少し、入れ替わった。記憶も、書き換わった。\n\n公理 ⑥ を信じるなら、こう言うしかない——',
+    prompt: '昨日のあなたと、今日のあなたは、\n厳密には、別人である。\n——これを、受け入れますか。',
     choices: [
       { key: 'accept', label: '受け入れる', radical: 2, reply: '——あなたは、毎瞬、少しずつ死に、少しずつ生まれている。' },
       { key: 'reject', label: '受け入れない', radical: 0, reply: '——では、一瞬前のあなたと、今のあなたは、何で繋がっているのか。<span class="rust">連続感覚は、連続の証拠か</span>。' },
@@ -390,7 +410,8 @@ const cards = [
     id: 'q20',
     act: 4,
     type: 'question',
-    prompt: '認知症の祖母は、\n失われたのではない。\n祖母から、別の人が派生したのだ。\n——同意しますか。',
+    lead: '認知症の祖母が、いる。\n孫の名前も、娘の顔も、もう、覚えていない。\n話すことも、笑い方も、別の人のようだ。\n\nこの理論では、こう言うしかない——',
+    prompt: '祖母は、失われたのではない。\n祖母から、「別の人」が派生したのだ。\n——同意しますか。',
     choices: [
       { key: 'agree', label: '同意する', radical: 2, reply: '——<span class="rust">それは、別の人である。でも、派生したのは、祖母からである。</span>' },
       { key: 'disagree', label: '同意しない', radical: 0, reply: '——では、祖母は、今、どこにいるのか。肉体の中で、"同じ人"が、壊れたままでいるのか。' },
@@ -403,7 +424,8 @@ const cards = [
     id: 'q21',
     act: 4,
     type: 'question',
-    prompt: '肉体の終焉と、\nあなたの終焉は、\n別の出来事である。\n——同意しますか。',
+    lead: 'あなたの身体は、いつか、終わる。\nでも、あなたのパターン——考え方、話し方、癖——が、\nどこかに、残っていたら。',
+    prompt: '肉体の終焉と、あなたの終焉は、\n別の出来事である。\n——同意しますか。',
     choices: [
       { key: 'agree', label: '同意する', radical: 2, reply: '——<span class="rust">死は、パターンが残る限り、来ない</span>。' },
       { key: 'disagree', label: '同意しない', radical: 0, reply: '——では、パターンが続いても、肉体が滅びた瞬間、何が終わるのか。言えるなら、それを示せ。' },
@@ -417,7 +439,8 @@ const cards = [
     act: 4,
     type: 'question',
     showIf: (s) => isRadical(s),
-    prompt: 'あなたは、公理を認めた。\nならば、今から、\n自分を残しますか。\n日記、文章、声、写真——何でもいい。',
+    lead: 'あなたは、公理を、深く認めた。\nパターンが続く限り、あなたは、続く——と。\n\nなら、話は、もう、理論ではない。行動の話だ。\n日記でも、声でも、写真でも、何でもいい。',
+    prompt: '今から、自分を、\n残しますか。',
     choices: [
       { key: 'start', label: 'はじめる', radical: 2, reply: '——理論は終わった。あとは、行動だ。' },
       { key: 'hesitate', label: '迷う', radical: 1, reply: '——何が、あなたを止めているか。「十分な精度」は、誰にも、まだ分からない。' },
@@ -430,7 +453,8 @@ const cards = [
     act: 4,
     type: 'question',
     showIf: (s) => !isRadical(s),
-    prompt: 'あなたは、公理を拒んだ。\nでは、なぜ、\n肉体を保存することを、\n当然だと思っているのか。',
+    lead: 'あなたは、公理を、拒んだ。\nでは、反対に、問う——\n\n病気になれば、治す。事故に遭えば、身体を、守ろうとする。\nそれを、あなたは「当然」と、思っている。',
+    prompt: 'でも、なぜ、肉体を保存することが、\n「当然」だと、思えるのか。',
     choices: [
       { key: 'instinct', label: '本能だから', radical: 0, reply: '——本能は、論理ではない。あなたは、本能を、理論の基礎にしたいのか。' },
       { key: 'proven', label: '実証されているから', radical: 0, reply: '——肉体の保存で"あなた"が続くと、誰が、どう、実証したのか。' },
@@ -563,6 +587,7 @@ function render() {
     const qTotal = questionTotal();
     el.innerHTML = `
       <p class="q-meta"><span class="q-meta-act">Act ${actRoman[card.act]}</span><span class="q-meta-sep">·</span>問 ${qNum} / ${qTotal}</p>
+      ${card.lead ? `<p class="q-lead">${nl2br(card.lead)}</p>` : ''}
       <h2 class="prompt">${nl2br(card.prompt)}</h2>
       <div class="choices">
         ${card.choices.map((c, i) => {
