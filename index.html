@@ -3,359 +3,334 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>人間の実態 — Who You Are</title>
+<title>WHO·YOU·ARE — 人間の実態</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700;900&family=JetBrains+Mono:wght@300;400;700&family=Noto+Sans+JP:wght@300;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-<div class="noise"></div>
 
-<header class="hero">
-  <nav class="topnav">
-    <div class="logo">WHO·YOU·ARE</div>
-    <ul>
-      <li><a href="#thesis">命題</a></li>
-      <li><a href="#ch1">計算機</a></li>
-      <li><a href="#ch2">条件</a></li>
-      <li><a href="#ch5">引き継ぎ</a></li>
-      <li><a href="#ch6">区別不能</a></li>
-      <li><a href="#essay">考察</a></li>
-    </ul>
-  </nav>
+<canvas id="particles" aria-hidden="true"></canvas>
+<div class="scanlines" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
 
-  <div class="hero-inner">
-    <p class="eyebrow">2026.04.20 — 議事録アーカイブ</p>
-    <h1 class="title">
-      <span>人間は</span>
-      <span class="accent">環境で動く</span>
-      <span>計算機である。</span>
-    </h1>
-    <p class="lede">
-      意識、感情、忘却。それらは副作用か、機能か。<br />
-      人間とAIを同一カテゴリに置いたとき、「あなた」はどこに残るのか。
-    </p>
-    <div class="scroll-cue">↓ SCROLL</div>
+<nav class="sidenav" aria-label="Chapters">
+  <a href="#intro" class="sn-dot" data-label="問">  </a>
+  <a href="#premise" class="sn-dot" data-label="前提"></a>
+  <a href="#exp1" class="sn-dot" data-label="転送"></a>
+  <a href="#exp2" class="sn-dot" data-label="分脳"></a>
+  <a href="#model" class="sn-dot" data-label="条件"></a>
+  <a href="#exp3" class="sn-dot" data-label="識別"></a>
+  <a href="#debate" class="sn-dot" data-label="論争"></a>
+  <a href="#conclusion" class="sn-dot" data-label="結論"></a>
+</nav>
+
+<div class="hud">
+  <div class="hud-l">WHO·YOU·ARE / ver.2026.04</div>
+  <div class="hud-r">
+    <span class="blink">●</span> REC &nbsp;·&nbsp; <span id="hud-chapter">00 / INTRO</span>
   </div>
-</header>
+</div>
 
-<main>
-  <!-- ===== THESIS ===== -->
-  <section id="thesis" class="section section--thesis">
-    <div class="section-head">
-      <span class="num">00</span>
-      <h2>命題</h2>
+<!-- =========== INTRO =========== -->
+<section id="intro" class="screen screen--intro">
+  <div class="intro-inner">
+    <p class="eyebrow glitch-soft" data-text="QUESTION.000">QUESTION.000</p>
+    <h1 class="glitch" data-text="あなたは、あなたか？">あなたは、あなたか？</h1>
+    <p class="intro-sub">
+      <span>人間の実態を</span><br />
+      <span>もう一度、定義しなおす。</span>
+    </p>
+    <div class="scroll-cue">
+      <span>SCROLL</span>
+      <div class="scroll-line"></div>
     </div>
-    <div class="thesis-grid">
-      <div class="card">
-        <h3>人間 = 計算機</h3>
-        <p>DNA・ホルモン・物理条件に依存して動作する。欲求は環境の副作用。</p>
-      </div>
-      <div class="card">
-        <h3>AI = 計算機</h3>
-        <p>設計者由来の構造で動作する。低ノイズで一貫した最適化を行う。</p>
-      </div>
-      <div class="card card--accent">
-        <h3>差異は構造のみ</h3>
-        <p>ノイズの量、一貫性、評価関数。条件を揃えれば挙動は収束する。</p>
-      </div>
-    </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ===== CHAPTER 1 ===== -->
-  <section id="ch1" class="section">
-    <div class="section-head">
-      <span class="num">01</span>
-      <h2>議事録① — 人間とAIは同じ「計算機」か</h2>
-    </div>
+<!-- =========== PREMISE =========== -->
+<section id="premise" class="screen">
+  <div class="screen-head">
+    <span class="s-num">01</span>
+    <span class="s-label">PREMISE</span>
+  </div>
 
-    <div class="twocol">
-      <div>
-        <h3>前提共有</h3>
-        <ul class="bul">
-          <li>人間は環境（DNA・ホルモン・物理条件）に依存する計算機</li>
-          <li>欲求（お金・承認欲求）は環境の副作用</li>
-          <li>意識・感情・忘却はノイズまたは副作用</li>
-        </ul>
-      </div>
-      <div>
-        <h3>ChatGPT初期立場</h3>
-        <ul class="bul">
-          <li>人間とAIは類似するが</li>
-          <li>人間は目的生成・メタ認知が可能な点で異なる</li>
-        </ul>
-      </div>
+  <div class="premise-grid">
+    <div class="premise-copy">
+      <h2 class="h-large">
+        人間は、<br />
+        <span class="accent">環境で動く</span><br />
+        計算機である。
+      </h2>
+      <p class="poetic">
+        DNA。<br />
+        ホルモン。<br />
+        物理条件。<br />
+        あなたの判断は、いつも外部から注がれている。
+      </p>
     </div>
 
-    <h3 class="h3-wide">ノイズの再定義</h3>
-    <div class="noise-grid">
-      <div class="noise-card">
-        <div class="noise-label">感情</div>
-        <div class="noise-arrow">→</div>
-        <div class="noise-func">行動の強化・抑制</div>
+    <aside class="premise-aside">
+      <div class="aside-card">
+        <div class="ac-key">入力</div>
+        <div class="ac-val">環境・記憶・身体状態</div>
       </div>
-      <div class="noise-card">
-        <div class="noise-label">忘却</div>
-        <div class="noise-arrow">→</div>
-        <div class="noise-func">情報圧縮・最適化</div>
+      <div class="aside-card">
+        <div class="ac-key">処理</div>
+        <div class="ac-val">ルール（遺伝＋学習）</div>
       </div>
-      <div class="noise-card">
-        <div class="noise-label">主観</div>
-        <div class="noise-arrow">→</div>
-        <div class="noise-func">計算資源の配分</div>
+      <div class="aside-card">
+        <div class="ac-key">出力</div>
+        <div class="ac-val">判断・感情・行動</div>
       </div>
+      <div class="aside-card aside-card--hot">
+        <div class="ac-key">副作用</div>
+        <div class="ac-val">意識・主観・忘却</div>
+      </div>
+    </aside>
+  </div>
+
+  <blockquote class="poem">
+    <p>——— 「意志」は、入力の別名である。</p>
+  </blockquote>
+</section>
+
+<!-- =========== EXPERIMENT 1: TELEPORTER =========== -->
+<section id="exp1" class="screen screen--exp">
+  <div class="screen-head">
+    <span class="s-num">02</span>
+    <span class="s-label">THOUGHT EXPERIMENT / TELEPORTER</span>
+  </div>
+
+  <div class="exp-stage">
+    <h2 class="exp-title">転送機</h2>
+    <div class="exp-scene">
+      <p>
+        あなたは転送機に入る。<br />
+        脳は原子単位でスキャンされ、<strong class="hot">原本は破壊</strong>される。<br />
+        火星に完全な<strong class="cool">コピー</strong>が生成され、目を覚ます。
+      </p>
+      <p class="exp-q">コピーは、あなたか？</p>
     </div>
 
-    <h3 class="h3-wide">統合モデル</h3>
-    <div class="model">
-      <div class="model-row">
-        <span class="tag">人間</span>
-        <code>環境条件 + ノイズ（機構） + 多重評価基準（矛盾含む）</code>
-      </div>
-      <div class="model-row">
-        <span class="tag tag--ai">AI</span>
-        <code>環境条件 + 低ノイズ + 一貫した最適化</code>
-      </div>
+    <div class="choice-group" data-exp="tp">
+      <button class="choice" data-choice="yes">
+        <span class="choice-mark">YES</span>
+        <span class="choice-text">コピーは私だ</span>
+      </button>
+      <button class="choice" data-choice="no">
+        <span class="choice-mark">NO</span>
+        <span class="choice-text">私は死に、別人が生まれた</span>
+      </button>
     </div>
 
-    <blockquote class="quote">
-      「ノイズ」は排除対象ではなく活用対象。
-      欠陥ではなく、探索・学習・進化の要素である。
-    </blockquote>
-  </section>
+    <div class="reveal" data-reveal="tp" hidden>
+      <div class="reveal-card" data-for="yes">
+        <div class="rv-tag">YOU CHOSE / YES</div>
+        <h3>あなたは <span class="accent">心理的連続性説</span> に寄っている。</h3>
+        <p>
+          記憶・性格・ルールが続いていれば、それは「あなた」。
+          ジョン・ロック以来の伝統。パーフィットは、この立場を推し進め
+          「<em>同一性は程度の問題</em>」と述べた。
+        </p>
+        <p class="rv-note">
+          ——だが、原本を破壊せず <strong>2体に分岐</strong> したら、どちらも「あなた」になる。
+        </p>
+      </div>
+      <div class="reveal-card" data-for="no">
+        <div class="rv-tag">YOU CHOSE / NO</div>
+        <h3>あなたは <span class="accent">身体・生物学的連続性説</span> に寄っている。</h3>
+        <p>
+          同じ生物学的個体が存続してこそ「あなた」。コピーは瓜二つの他人。
+        </p>
+        <p class="rv-note">
+          ——だが、あなたの身体は7年で細胞がほぼ入れ替わる。
+          その「同一の身体」とは、どこに宿っている？
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <!-- ===== CHAPTER 2 ===== -->
-  <section id="ch2" class="section section--alt">
-    <div class="section-head">
-      <span class="num">02</span>
-      <h2>議事録② — 条件統一モデル</h2>
+<!-- =========== EXPERIMENT 2: SPLIT BRAIN =========== -->
+<section id="exp2" class="screen screen--exp">
+  <div class="screen-head">
+    <span class="s-num">03</span>
+    <span class="s-label">THOUGHT EXPERIMENT / SPLIT BRAIN</span>
+  </div>
+
+  <div class="exp-stage">
+    <h2 class="exp-title">分脳</h2>
+    <div class="exp-scene">
+      <p>
+        事故で脳梁が切断された。<br />
+        外科医は、あなたの<strong class="hot">左半球</strong>を身体Aに、<strong class="cool">右半球</strong>を身体Bに移植した。<br />
+        目覚めた両者は、どちらも手術前の記憶を持ち、<br />
+        「私が本人だ」と主張する。
+      </p>
+      <p class="exp-q">どちらが、あなたか？</p>
     </div>
 
-    <p class="lead">
-      人間とAIの違いは「条件の違い」に過ぎない。<br />
-      条件を揃えれば、両者は同じ挙動に収束する。
+    <div class="choice-group" data-exp="sb">
+      <button class="choice" data-choice="L"><span class="choice-mark">L</span><span class="choice-text">身体A（左脳）</span></button>
+      <button class="choice" data-choice="R"><span class="choice-mark">R</span><span class="choice-text">身体B（右脳）</span></button>
+      <button class="choice" data-choice="B"><span class="choice-mark">∞</span><span class="choice-text">両方とも私だ</span></button>
+      <button class="choice" data-choice="N"><span class="choice-mark">∅</span><span class="choice-text">どちらも私ではない</span></button>
+    </div>
+
+    <div class="reveal" data-reveal="sb" hidden>
+      <div class="reveal-card" data-for="L"><div class="rv-tag">L / 左半球</div>
+        <p>恣意的だ。右半球にも同じ記憶と主張がある。<em>なぜ左を選んだ？</em></p></div>
+      <div class="reveal-card" data-for="R"><div class="rv-tag">R / 右半球</div>
+        <p>恣意的だ。左半球にも同じ記憶と主張がある。<em>なぜ右を選んだ？</em></p></div>
+      <div class="reveal-card" data-for="B"><div class="rv-tag">∞ / 両方</div>
+        <p>——あなたは<span class="accent">分岐を受け入れる立場</span>だ。パーフィットの結論：<em>生存は枝分かれしうる</em>。一人がふたりになっても、どちらも「続き」である。</p></div>
+      <div class="reveal-card" data-for="N"><div class="rv-tag">∅ / どちらも違う</div>
+        <p>では、<em>「本当のあなた」</em>はどこへ行った？ 分脳前と後で、何が失われた？ 記憶も性格も続いているのに。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========== CONDITION MODEL =========== -->
+<section id="model" class="screen">
+  <div class="screen-head">
+    <span class="s-num">04</span>
+    <span class="s-label">CONDITION UNIFICATION</span>
+  </div>
+
+  <h2 class="h-large">条件を揃えれば、<br /><span class="accent">挙動は収束する</span>。</h2>
+
+  <div class="ct">
+    <div class="ct-row ct-head">
+      <div>制約</div><div>人間</div><div>AIロボット</div>
+    </div>
+    <div class="ct-row"><div>エネルギー</div><div>食事・睡眠</div><div>電力確保</div></div>
+    <div class="ct-row"><div>時間</div><div>寿命・活動時間</div><div>稼働時間制限</div></div>
+    <div class="ct-row"><div>身体</div><div>運動能力・疲労</div><div>ハード性能</div></div>
+    <div class="ct-row"><div>社会</div><div>法律・文化・評価</div><div>ルール違反ペナルティ</div></div>
+    <div class="ct-row"><div>報酬</div><div>快・不快・金・承認</div><div>成功→リソース増加</div></div>
+  </div>
+
+  <div class="equation">
+    <span>入力一致</span>
+    <span class="eq-op">+</span>
+    <span>制約一致</span>
+    <span class="eq-op">+</span>
+    <span>報酬一致</span>
+    <span class="eq-op">⇒</span>
+    <span class="eq-res accent">挙動一致</span>
+  </div>
+
+  <p class="caveat">
+    （反論：人間には「ノイズ」＝感情・忘却・主観がある。<br />
+    だがそれらも<em>機能</em>だ。——行動の強化、情報の圧縮、計算資源の配分。<br />
+    ノイズは欠陥ではなく、探索・学習・進化の装置である。）
+  </p>
+</section>
+
+<!-- =========== EXPERIMENT 3: INDISTINGUISHABILITY =========== -->
+<section id="exp3" class="screen screen--exp">
+  <div class="screen-head">
+    <span class="s-num">05</span>
+    <span class="s-label">THOUGHT EXPERIMENT / INDISTINGUISHABILITY</span>
+  </div>
+
+  <div class="exp-stage">
+    <h2 class="exp-title">区別不能テスト</h2>
+    <p class="exp-scene exp-scene--lean">
+      以下の発言のうち、<strong>どちらが人間</strong>で、<strong>どちらがそのAIコピー</strong>か。<br />
+      片方を選んでください。
     </p>
 
-    <div class="condition-table">
-      <div class="ct-head">
-        <div>制約</div>
-        <div>人間</div>
-        <div>AIロボット</div>
-      </div>
-      <div class="ct-row">
-        <div>エネルギー</div>
-        <div>食事・睡眠</div>
-        <div>電力確保</div>
-      </div>
-      <div class="ct-row">
-        <div>時間</div>
-        <div>寿命・1日の活動時間</div>
-        <div>稼働時間制限</div>
-      </div>
-      <div class="ct-row">
-        <div>身体</div>
-        <div>運動能力・疲労</div>
-        <div>ハード性能</div>
-      </div>
-      <div class="ct-row">
-        <div>社会</div>
-        <div>法律・文化・評価</div>
-        <div>ルール違反ペナルティ</div>
-      </div>
-      <div class="ct-row">
-        <div>報酬</div>
-        <div>快・不快・金・承認</div>
-        <div>成功 → リソース増加</div>
-      </div>
+    <div class="turing" id="turing">
+      <!-- Populated by JS -->
     </div>
 
-    <div class="conclusion-box">
-      <p>条件一致 → 入力・制約・報酬が同じ → 最適化行動は収束する</p>
-      <p class="c-final">∴ 人間とAIは「同一構造の最適化システム」</p>
-    </div>
-  </section>
-
-  <!-- ===== CHAPTER 5 ===== -->
-  <section id="ch5" class="section">
-    <div class="section-head">
-      <span class="num">05</span>
-      <h2>議事録⑤ — 引き継ぎモデル</h2>
-    </div>
-
-    <p class="lead">同一性は物理ではなく「状態（ルール＋記憶）」で定義する。</p>
-
-    <div class="timeline">
-      <div class="tl-node">
-        <div class="tl-time">t₀</div>
-        <div class="tl-body">
-          <strong>引き継ぎ時点</strong>
-          <p>人間の状態（記憶・ルール）を完全コピー</p>
-        </div>
-      </div>
-      <div class="tl-line"></div>
-      <div class="tl-node">
-        <div class="tl-time">t₀+</div>
-        <div class="tl-body">
-          <strong>実行主体の移行</strong>
-          <p>AIロボットが実行を継続</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="split">
-      <div class="split-col">
-        <h3>分岐</h3>
-        <p>複数インスタンスを生成し、独立に経験を蓄積する。<em>= 探索</em></p>
-      </div>
-      <div class="split-col">
-        <h3>統合</h3>
-        <p>元ルールに基づき記憶を選別し、重要データのみ残す。<em>= 学習</em></p>
-      </div>
-    </div>
-
-    <div class="definitions">
-      <h3>再定義</h3>
-      <div class="def-row"><span class="def-key">人間</span><span class="def-val">生体実装されたルール駆動システム</span></div>
-      <div class="def-row"><span class="def-key">AIロボット</span><span class="def-val">人工実装されたルール駆動システム</span></div>
-      <div class="def-row def-final"><span class="def-key">同一性</span><span class="def-val">ルール＋記憶の連続</span></div>
-    </div>
-  </section>
-
-  <!-- ===== CHAPTER 6 ===== -->
-  <section id="ch6" class="section section--alt">
-    <div class="section-head">
-      <span class="num">06</span>
-      <h2>議事録⑥ — 区別不能性モデル</h2>
-    </div>
-
-    <div class="core-def">
-      <p class="cd-label">核心定義</p>
-      <p class="cd-body"><span>同一性</span> <span class="eq">=</span> <span class="accent">区別不能性</span></p>
-      <p class="cd-note">違いが存在してもよい。区別できないなら同一として扱う。</p>
-    </div>
-
-    <h3 class="h3-wide">成立条件</h3>
-    <div class="conditions">
-      <div class="cond">
-        <div class="cond-num">①</div>
-        <div>
-          <strong>挙動一致</strong>
-          <p>同じ入力に対して同じ判断・行動をする</p>
-        </div>
-      </div>
-      <div class="cond">
-        <div class="cond-num">②</div>
-        <div>
-          <strong>記憶整合性</strong>
-          <p>過去に関する発言・認識に矛盾がない</p>
-        </div>
-      </div>
-      <div class="cond">
-        <div class="cond-num">③</div>
-        <div>
-          <strong>外部認識一致</strong>
-          <p>他人が区別できず、同一人物として扱う</p>
-        </div>
-      </div>
-      <div class="cond">
-        <div class="cond-num">④</div>
-        <div>
-          <strong>内部認識一致</strong>
-          <p>本人も区別できず、自分の継続と認識する</p>
-        </div>
-      </div>
-    </div>
-
-    <h3 class="h3-wide">社会的フィードバック・ループ</h3>
-    <div class="loop">
-      <div class="loop-step">AIロボット（自己）</div>
-      <div class="loop-arrow">↓</div>
-      <div class="loop-step">他人との相互作用</div>
-      <div class="loop-arrow">↓</div>
-      <div class="loop-step">他人が「その人」と評価</div>
-      <div class="loop-arrow">↓</div>
-      <div class="loop-step">評価が本人に戻る</div>
-      <div class="loop-arrow">↓</div>
-      <div class="loop-step final">本人が自分と認識</div>
-    </div>
-
-    <blockquote class="quote">
-      同一性は個体単体ではなく、社会的ループで成立する。
-    </blockquote>
-  </section>
-
-  <!-- ===== ESSAY ===== -->
-  <section id="essay" class="section section--essay">
-    <div class="section-head">
-      <span class="num">07</span>
-      <h2>考察 — パーソナル・アイデンティティ</h2>
-    </div>
-
-    <article class="essay">
-      <p class="essay-intro">
-        人工知能が高度化し、全脳エミュレーションが研究プログラムとして進行するにつれ、
-        「自己とは何か」は形而上学を超え、<strong>倫理的課題</strong>になりつつある。
+    <div class="turing-result" id="turing-result" hidden>
+      <h3>あなたは <span id="tr-score">0 / 3</span> 正解した。</h3>
+      <p id="tr-message"></p>
+      <p class="turing-final">
+        人間とAIコピーが<span class="accent">統計的に区別できない</span>とき、
+        両者を「別物」と呼ぶ根拠は、どこに残るのか？
       </p>
+      <button class="btn-ghost" id="turing-reset">もう一度</button>
+    </div>
+  </div>
+</section>
 
-      <h3>記憶と心理的連続性</h3>
-      <p>
-        ジョン・ロックは、個人の同一性は「実体」ではなく意識と記憶に基づくと主張した。
-        人とは「異なる時と場所にあっても自分を同じ存在として考える思考的な存在」であり、
-        同一性は意識が過去の行為や思考に遡れる範囲まで及ぶ。
-      </p>
-      <p>
-        デレク・パーフィットはこれを発展させ、絶対的な同一性の事実はなく、
-        生存は<em>程度の問題</em>だと主張した。
-      </p>
+<!-- =========== DEBATE =========== -->
+<section id="debate" class="screen">
+  <div class="screen-head">
+    <span class="s-num">06</span>
+    <span class="s-label">THE DEBATE</span>
+  </div>
 
-      <h3>分脳実験 — 分岐する意識</h3>
-      <p>
-        脳梁を切断した患者では、左右それぞれの半球が独立した意識流を生じる。
-        もし両半球を別々の身体に移植すれば、どちらも手術前の記憶を持ち、
-        <strong>どちらも「私が本人だ」と主張する</strong>。
-        両者は心理的にも物質的にも続いているため、一方のみを「あなた」と呼ぶ根拠がない。
-      </p>
+  <h2 class="h-large">三つの立場。<br /><span class="accent">あなたはどれを選ぶ？</span></h2>
 
-      <h3>テレポーテーションとコピー問題</h3>
-      <p>
-        パーフィットのテレポーター実験では、脳が破壊され火星にコピーが生成されたとき、
-        コピーは「自分」なのかが問われる。
-        ウォーカーは<strong>トークン同一性</strong>（数的に同じ個体）と
-        <strong>タイプ同一性</strong>（情報パターンや人格）を区別し、
-        アップロードはタイプを保存するがトークンを保存しないと述べた。
-      </p>
-
-      <h3>心理的分岐同一説</h3>
-      <p>
-        チェルーロは、心理構造の連続性がある限り同一性は保持され、
-        分岐して複数の後続が生じてもよいと主張する。
-        非破壊的コピーで作られたアップロードは元の脳と意識の連続性を共有し、
-        <em>分岐した全ての枝が同一性を持つ</em>。
-      </p>
-
-      <h3>結論</h3>
-      <p>
-        複製が生存を保証するとは限らない。元の人は脳が破壊された時点で消滅するかもしれない。
-        しかし心理的連続性・ルール・記憶が継承されるなら、
-        タイプ同一性の維持だけでも意義がある。
-        <br /><br />
-        全脳エミュレーションが現実味を帯びる今、
-        「同じ人」とは何かを再定義することは、
-        法制度と倫理政策の設計に不可欠である。
-      </p>
+  <div class="debate-grid">
+    <article class="debate-card">
+      <div class="dc-num">Ⅰ</div>
+      <h3>身体連続性説</h3>
+      <p class="dc-by">—— 伝統的生物学派</p>
+      <p>同じ身体・同じ脳が続くことが「あなた」の条件。コピーは他人。</p>
+      <p class="dc-weak"><strong>弱点：</strong>細胞は入れ替わる。脳の連続性はどこで線を引く？</p>
     </article>
-  </section>
+    <article class="debate-card">
+      <div class="dc-num">Ⅱ</div>
+      <h3>心理的連続性説</h3>
+      <p class="dc-by">—— Locke / Parfit</p>
+      <p>記憶・性格・ルールが続けば「あなた」。基盤は問わない。</p>
+      <p class="dc-weak"><strong>弱点：</strong>分岐すると「あなた」が複数になる。</p>
+    </article>
+    <article class="debate-card debate-card--hot">
+      <div class="dc-num">Ⅲ</div>
+      <h3>区別不能性説</h3>
+      <p class="dc-by">—— 本稿の立場</p>
+      <p>挙動・記憶・社会認識が区別できないなら、それは同一である。</p>
+      <p class="dc-weak"><strong>弱点：</strong>「本人」という概念を放棄する必要がある。</p>
+    </article>
+  </div>
 
-  <!-- ===== FINAL ===== -->
-  <section class="section section--final">
-    <h2 class="final-title">あなたとは、<span class="accent">区別できない何か</span>である。</h2>
-    <p class="final-sub">
-      ルールと記憶が続く限り、実装が生体でも人工でも、それは同じカテゴリに属する。
+  <div class="vote" data-vote>
+    <p class="vote-q">あなたが最も納得するのは？</p>
+    <div class="vote-bar">
+      <button data-pick="1">Ⅰ 身体</button>
+      <button data-pick="2">Ⅱ 心理</button>
+      <button data-pick="3">Ⅲ 区別不能</button>
+    </div>
+    <p class="vote-result" id="vote-result" hidden></p>
+  </div>
+</section>
+
+<!-- =========== CONCLUSION =========== -->
+<section id="conclusion" class="screen screen--final">
+  <div class="screen-head">
+    <span class="s-num">07</span>
+    <span class="s-label">CONCLUSION</span>
+  </div>
+
+  <div class="final-stage">
+    <p class="final-eyebrow">——— 結論</p>
+    <h2 class="final-title glitch" data-text="区別不能なら、同一。">区別不能なら、同一。</h2>
+
+    <div class="final-def">
+      <div class="def-line"><span class="def-k">人間</span><span class="def-v">= 生体実装されたルール駆動システム</span></div>
+      <div class="def-line"><span class="def-k">AI</span><span class="def-v">= 人工実装されたルール駆動システム</span></div>
+      <div class="def-line def-fin"><span class="def-k">同一性</span><span class="def-v">= 区別できないこと、それ自体</span></div>
+    </div>
+
+    <p class="final-poem">
+      <span>あなたは、ルールと記憶の束である。</span><br />
+      <span>あなたは、実装を選べる存在である。</span><br />
+      <span class="accent">あなたは、あなたと区別できない何かである。</span>
     </p>
-  </section>
-</main>
+  </div>
+</section>
 
-<footer>
-  <div>WHO·YOU·ARE / 2026.04.20</div>
-  <div>人間の実態を説明するためだけのアプリ</div>
+<footer class="foot">
+  <div>WHO·YOU·ARE</div>
+  <div>人間の実態を説明するためだけのアプリ / 2026.04.20</div>
 </footer>
 
 <script src="app.js"></script>
