@@ -7,7 +7,6 @@ const cards = [
     sigil: '々',
     title: '人 間 の 実 態',
     subtitle: '区別不能性アイデンティティ理論',
-    lead: 'これは、読み物ではない。<br>あなたの回答が、<span class="rust">あなたの理論</span>をつくる。',
     startLabel: 'はじめる',
   },
   {
@@ -512,6 +511,7 @@ const progressFill = document.getElementById('progress-fill');
 const progressText = document.getElementById('progress-text');
 const navPrev = document.getElementById('nav-prev');
 const navNext = document.getElementById('nav-next');
+const navHint = document.getElementById('nav-hint');
 
 // =================== RENDER ===================
 const actRoman = ['', 'Ⅰ', 'Ⅱ', 'Ⅲ', 'Ⅳ', 'Ⅴ'];
@@ -530,8 +530,26 @@ function render() {
       <div class="sigil">${card.sigil}</div>
       <h1 class="title">${card.title}</h1>
       <p class="subtitle">${card.subtitle}</p>
-      <p class="lead">${card.lead}</p>
+
+      <p class="lead">これは、読み物では、ない。<br>
+        あなたの回答が、<span class="rust">あなたの理論</span>をつくる。</p>
+
+      <div class="acts-overview">
+        <div class="ao-row"><span class="ao-num">Ⅰ</span><span class="ao-name">診 断</span><span class="ao-desc">あなたは今、何を信じているか</span></div>
+        <div class="ao-row"><span class="ao-num">Ⅱ</span><span class="ao-name">試 練</span><span class="ao-desc">直観を、揺さぶる</span></div>
+        <div class="ao-row"><span class="ao-num">Ⅲ</span><span class="ao-name">建 設</span><span class="ao-desc">公理を、一つずつ</span></div>
+        <div class="ao-row"><span class="ao-num">Ⅳ</span><span class="ao-name">展 開</span><span class="ao-desc">含意を、突きつける</span></div>
+        <div class="ao-row"><span class="ao-num">Ⅴ</span><span class="ao-name">結 像</span><span class="ao-desc">あなたの回答、あなたの理論</span></div>
+      </div>
+
+      <p class="meta-hint">
+        約 30 問 &nbsp;·&nbsp; 15 分<br>
+        答えは、いつでも、選び直せる<br>
+        進行は、自動で、保存される
+      </p>
+
       <button class="start" id="btn-start">${card.startLabel}</button>
+      <p class="kbd-hint">← &nbsp; → &nbsp; で も 進 め ま す</p>
     `;
   } else if (card.type === 'interlude') {
     el.innerHTML = `
@@ -551,7 +569,7 @@ function render() {
           const isPicked = answered === c.key;
           const cls = isPicked ? 'picked' : (answered ? 'dim' : '');
           return `
-            <button class="choice ${cls}" data-key="${c.key}" ${answered ? 'disabled' : ''}>
+            <button class="choice ${cls}" data-key="${c.key}">
               <span class="choice-mark">${choiceMarks[i]}</span><span>${c.label}</span>
             </button>
           `;
@@ -583,7 +601,7 @@ function render() {
           const isPicked = answered === c.key;
           const cls = isPicked ? 'picked' : (answered ? 'dim' : '');
           return `
-            <button class="choice ${cls}" data-key="${c.key}" ${answered ? 'disabled' : ''}>
+            <button class="choice ${cls}" data-key="${c.key}">
               <span class="choice-mark">${choiceMarks[i]}</span><span>${c.label}</span>
             </button>
           `;
@@ -599,7 +617,7 @@ function render() {
   if (card.type === 'opening') {
     const startBtn = el.querySelector('#btn-start');
     startBtn?.addEventListener('click', advance);
-  } else if ((card.type === 'question' || card.type === 'axiom') && !state.answers[card.id]) {
+  } else if (card.type === 'question' || card.type === 'axiom') {
     el.querySelectorAll('.choice').forEach(btn => {
       btn.addEventListener('click', () => pickChoice(card, btn.dataset.key));
     });
@@ -617,11 +635,24 @@ function updateChrome(card) {
   const isFirst = vIdx === 0;
   const isLast = vIdx === total - 1;
   const needsAnswer = (card.type === 'question' || card.type === 'axiom') && !state.answers[card.id];
+  const hasAnswered = (card.type === 'question' || card.type === 'axiom') && !!state.answers[card.id];
 
   navPrev.disabled = isFirst;
   navPrev.style.visibility = card.type === 'opening' ? 'hidden' : 'visible';
   navNext.disabled = needsAnswer || isLast;
   navNext.style.visibility = card.type === 'opening' ? 'hidden' : 'visible';
+  navNext.classList.toggle('ready', hasAnswered && !isLast);
+
+  if (navHint) {
+    if (needsAnswer) {
+      navHint.textContent = '—— 選 ん で く だ さ い';
+      navHint.classList.add('pending');
+    } else {
+      navHint.textContent = '← →  キ ー で も';
+      navHint.classList.remove('pending');
+    }
+    navHint.style.visibility = card.type === 'opening' ? 'hidden' : 'visible';
+  }
 
   const pct = total > 1 ? (vIdx / (total - 1)) * 100 : 0;
   progressFill.style.width = `${pct}%`;
@@ -743,11 +774,45 @@ function resetAll() {
 
 // =================== ACTIONS ===================
 function pickChoice(card, key) {
+  const oldKey = state.answers[card.id];
+  if (oldKey === key) return;
+  if (oldKey) {
+    const oldChoice = card.choices.find(c => c.key === oldKey);
+    if (oldChoice) state.radical -= (oldChoice.radical || 0);
+  }
   state.answers[card.id] = key;
   const choice = card.choices.find(c => c.key === key);
-  if (choice) state.radical += choice.radical || 0;
+  if (choice) state.radical += (choice.radical || 0);
   saveState();
-  render();
+  if (oldKey) {
+    updateChoicesInPlace(card, key);
+  } else {
+    render();
+  }
+}
+
+function updateChoicesInPlace(card, key) {
+  const cur = deck.querySelector('.card');
+  if (!cur) { render(); return; }
+  cur.querySelectorAll('.choice').forEach(btn => {
+    const isPicked = btn.dataset.key === key;
+    btn.classList.toggle('picked', isPicked);
+    btn.classList.toggle('dim', !isPicked);
+  });
+  const newReplyText = card.choices.find(c => c.key === key).reply;
+  let replyEl = cur.querySelector('.reply');
+  if (!replyEl) {
+    replyEl = document.createElement('div');
+    replyEl.className = 'reply';
+    replyEl.innerHTML = `<p>${newReplyText}</p>`;
+    cur.appendChild(replyEl);
+    requestAnimationFrame(() => replyEl.classList.add('visible'));
+  } else {
+    replyEl.querySelector('p').innerHTML = newReplyText;
+    replyEl.classList.remove('visible');
+    requestAnimationFrame(() => replyEl.classList.add('visible'));
+  }
+  updateChrome(card);
 }
 function isVisible(card) {
   if (!card.showIf) return true;

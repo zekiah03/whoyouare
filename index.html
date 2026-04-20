@@ -25,9 +25,13 @@
 <main class="deck" id="deck" aria-live="polite"></main>
 
 <footer class="nav">
-  <button id="nav-prev" aria-label="前へ戻る">← 戻 る</button>
-  <span class="nav-hint" aria-hidden="true">← →</span>
-  <button id="nav-next" aria-label="次へ進む">進 む →</button>
+  <button class="nav-btn nav-btn--prev" id="nav-prev" aria-label="前へ戻る">
+    <span class="nav-arrow">←</span><span class="nav-label">戻 る</span>
+  </button>
+  <span class="nav-hint" id="nav-hint" aria-hidden="true">← → キー でも</span>
+  <button class="nav-btn nav-btn--next" id="nav-next" aria-label="次へ進む">
+    <span class="nav-label">進 む</span><span class="nav-arrow">→</span>
+  </button>
 </footer>
 
 <script src="app.js"></script>
