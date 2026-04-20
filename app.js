@@ -448,13 +448,30 @@ const cards = [
     text: 'あなたは、自分の公理から、\n自分の含意を、引き出した。\n\n——次は、結像。\nあなたの回答が、あなたの理論になる。',
   },
 
+  // ============ Act Ⅴ. 結 像 ============
   {
-    id: 'wip',
+    id: 'act5-intro',
     act: 5,
     type: 'interlude',
     actNum: 'Act Ⅴ',
-    actName: '準 備 中',
-    text: 'この旅は、段階的に完成していく。\n\n——まもなく、あなたの回答が、\nあなたの前に、戻ってくる。',
+    actName: '結 像',
+    text: 'これは、他人の理論では、ない。\n<span class="rust">あなたの回答が、つくった、あなたの理論</span>だ。',
+  },
+  {
+    id: 'map',
+    act: 5,
+    type: 'map',
+  },
+  {
+    id: 'synthesis',
+    act: 5,
+    type: 'synthesis',
+  },
+  {
+    id: 'final',
+    act: 5,
+    type: 'final',
+    sigil: '々',
   },
 ];
 
@@ -542,6 +559,19 @@ function render() {
       </div>
       ${answered ? `<div class="reply visible"><p>${card.choices.find(c => c.key === answered).reply}</p></div>` : ''}
     `;
+  } else if (card.type === 'map') {
+    el.innerHTML = renderMap();
+  } else if (card.type === 'synthesis') {
+    el.innerHTML = renderSynthesis();
+  } else if (card.type === 'final') {
+    el.innerHTML = `
+      <div class="sigil">${card.sigil}</div>
+      <p class="final-lead">あなたは、壊れない。<br>壊れるのは、<span class="rust">実装だけだ。</span></p>
+      <p class="final-line">——だから、今から、<br><span class="rust">自分を残せ。</span></p>
+      <p class="final-sub">日記でも、文章でも、写真でも、声でも。<br>何が十分かは、誰にも、まだ、分からない。<br>分かっているのは、始められるのは、今しかない、ということだけ。</p>
+      <p class="welcome">—— お か え り 。</p>
+      <button class="reset" id="btn-reset">最初から、もう一度</button>
+    `;
   } else if (card.type === 'axiom') {
     const answered = state.answers[card.id];
     el.innerHTML = `
@@ -573,6 +603,8 @@ function render() {
     el.querySelectorAll('.choice').forEach(btn => {
       btn.addEventListener('click', () => pickChoice(card, btn.dataset.key));
     });
+  } else if (card.type === 'final') {
+    el.querySelector('#btn-reset')?.addEventListener('click', resetAll);
   }
 
   updateChrome(card);
@@ -606,6 +638,107 @@ function questionNumber(id) {
 }
 function questionTotal() {
   return visibleCards().filter(c => c.type === 'question').length;
+}
+
+// =================== MAP & SYNTHESIS ===================
+function answeredCardsByAct() {
+  const v = visibleCards().filter(c => c.type === 'question' || c.type === 'axiom');
+  const byAct = { 1: [], 2: [], 3: [], 4: [] };
+  v.forEach(c => { if (byAct[c.act]) byAct[c.act].push(c); });
+  return byAct;
+}
+
+function weightFor(card) {
+  const ans = state.answers[card.id];
+  if (!ans) return -1;
+  const ch = card.choices.find(c => c.key === ans);
+  return ch ? (ch.radical || 0) : -1;
+}
+
+function renderMap() {
+  const byAct = answeredCardsByAct();
+  const actNames = { 1: '診 断', 2: '試 練', 3: '建 設', 4: '展 開' };
+  const rows = [1, 2, 3, 4].map(act => {
+    const dots = byAct[act].map(c => {
+      const w = weightFor(c);
+      const wcls = w === -1 ? 'empty' : (w === 0 ? 'w0' : w === 1 ? 'w1' : 'w2');
+      const first = (c.prompt || c.statement || '').split('\n')[0].replace(/<[^>]+>/g, '');
+      return `<span class="dot ${wcls}" title="${first}"></span>`;
+    }).join('');
+    return `
+      <div class="map-row">
+        <div class="map-row-label"><span class="map-act">Act ${actRoman[act]}</span> ${actNames[act]}</div>
+        <div class="map-row-dots">${dots}</div>
+      </div>
+    `;
+  }).join('');
+
+  return `
+    <p class="q-meta"><span class="q-meta-act">Act Ⅴ</span><span class="q-meta-sep">·</span>結 像</p>
+    <h2 class="map-title">あなたの回答、<br><span class="rust">あなたの理論</span>。</h2>
+    <div class="map-grid">${rows}</div>
+    <div class="map-legend">
+      <span class="legend-item"><span class="dot w0"></span>保 守</span>
+      <span class="legend-item"><span class="dot w1"></span>中 間</span>
+      <span class="legend-item"><span class="dot w2"></span>ラディカル</span>
+    </div>
+  `;
+}
+
+function computeRadicalScore() {
+  const v = visibleCards().filter(c => c.type === 'question' || c.type === 'axiom');
+  let score = 0, max = 0;
+  v.forEach(c => {
+    const choiceMax = Math.max(...c.choices.map(ch => ch.radical || 0));
+    max += choiceMax;
+    const w = weightFor(c);
+    if (w >= 0) score += w;
+  });
+  return { score, max, ratio: max > 0 ? score / max : 0 };
+}
+
+function renderSynthesis() {
+  const { ratio, score, max } = computeRadicalScore();
+  const pct = Math.round(ratio * 100);
+  let tag, body;
+  if (ratio >= 0.7) {
+    tag = 'ラ ディ カ ル';
+    body = `あなたは、六つの公理を、深く受け入れた。<br>
+      ——あなたにとって、<span class="rust">肉体は、実装にすぎない</span>。<br>
+      パターンが続く限り、あなたは、続く。<br>
+      AIは、仲間であり、アップロードは、生存の延長だ。<br>
+      <span class="rust">死は、あなたに、もう、来ない。</span>`;
+  } else if (ratio >= 0.4) {
+    tag = '境 界 の 人';
+    body = `あなたは、認めたい公理と、<br>認めたくない公理の、境界に、立っている。<br>
+      直観と論理の、<span class="rust">どちらも、あなたのものだ</span>。<br>
+      しかし、どちらを優先するかは、まだ、決まっていない。<br>
+      ——この未決が、あなたの、出発点だ。`;
+  } else {
+    tag = '保 守 的 な 人';
+    body = `あなたは、既存の自己観を、強く守っている。<br>
+      ——肉体が、あなたの中心だ。<br>
+      パターンでは、足りない。<br>
+      しかし、Act Ⅱ で揺れた直観の残響は、<br>
+      <span class="rust">あなたの中に、残っている</span>。<br>
+      それが、次の、扉である。`;
+  }
+
+  return `
+    <p class="q-meta"><span class="q-meta-act">Act Ⅴ</span><span class="q-meta-sep">·</span>合 成</p>
+    <p class="syn-score">ラディカル度 <span class="rust">${pct}%</span><span class="syn-score-sub">${score} / ${max}</span></p>
+    <h2 class="syn-tag">あなたは、<br><span class="rust">${tag}</span>。</h2>
+    <p class="syn-body">${body}</p>
+    <p class="syn-foot">——これは、他人の理論では、ない。<br><span class="rust">あなたの回答が、つくった理論</span>だ。</p>
+  `;
+}
+
+function resetAll() {
+  try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+  state.idx = 0;
+  state.answers = {};
+  state.radical = 0;
+  render();
 }
 
 // =================== ACTIONS ===================
