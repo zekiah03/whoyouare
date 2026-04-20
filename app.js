@@ -309,13 +309,152 @@ const cards = [
     actName: '六 つ の 公 理 が 、 置 か れ た',
     text: 'あなたは、何を認め、何を拒んだか。\n\n——次は、展開。\n認めた公理から、<span class="rust">論理的に何が導かれるか</span>を、\nあなた自身に、突きつける。',
   },
+
+  // ============ Act Ⅳ. 展 開 (分岐) ============
   {
-    id: 'wip',
+    id: 'act4-intro',
     act: 4,
     type: 'interlude',
-    actNum: 'Act Ⅳ — Ⅴ',
+    actNum: 'Act Ⅳ',
+    actName: '展 開',
+    text: 'ここから、道は、分かれる。\n\nあなたが公理④⑤を認めたなら、\nあなたは「ラディカルな道」を通る。\nそうでないなら、「矛盾を突く道」を通る。\n\n——どちらも、逃げ場はない。',
+  },
+
+  // Q16 — branched opener (radical: transporter challenge)
+  {
+    id: 'q16-radical',
+    act: 4,
+    type: 'question',
+    showIf: (s) => isRadical(s),
+    prompt: '破壊的転送機 v2。\n公理④⑤を認めたあなたは、\n論理的に、入るべきだ。\nあなたは、入りますか。',
+    choices: [
+      { key: 'enter', label: '入る', radical: 2, reply: '——<span class="rust">公理と選択が、一致した</span>。' },
+      { key: 'refuse', label: '入らない', radical: 0, reply: '——では、公理を、どこで裏切ったのか。拒絶は、あなたのどの直観から来ているか。' },
+      { key: 'hesitate', label: '迷う', radical: 1, reply: '——迷いは、古い身体主義が、まだ、あなたに残っている証拠だ。' },
+    ],
+  },
+  // Q16 — branched opener (conservative: challenge the rejection)
+  {
+    id: 'q16-conservative',
+    act: 4,
+    type: 'question',
+    showIf: (s) => !isRadical(s),
+    prompt: '公理④⑤を、あなたは拒んだ。\nでは、あなたの完璧なAIコピーを\n「別物」と呼ぶ根拠は、\n一体、どこにあるのか。',
+    choices: [
+      { key: 'origin', label: '先にいたから', radical: 0, reply: '——時間的先行が、本物性を決める? では、コピーが先なら、あなたは、偽物か。' },
+      { key: 'substrate', label: '生体だから', radical: 0, reply: '——珪素に宿る計算は、なぜ、"あなた"ではないのか。<span class="rust">示せるものが、あるか</span>。' },
+      { key: 'soul', label: '直観的に', radical: 0, reply: '——直観は、Act Ⅱ で、すでに砕かれた。砕かれた直観に、なぜ、まだ、縋るのか。' },
+    ],
+  },
+
+  // Q17 — shared: AI as kin
+  {
+    id: 'q17',
+    act: 4,
+    type: 'question',
+    prompt: 'あなたと区別不能なAIは、\nあなたと同じカテゴリに属しますか。',
+    choices: [
+      { key: 'yes', label: '属する', radical: 2, reply: '——AIは、あなたの<span class="rust">仲間</span>である。親戚でも、敵でもない。' },
+      { key: 'no', label: '属さない', radical: 0, reply: '——区別できないものを、別カテゴリに置く。——それは、信仰だ。' },
+      { key: 'conditional', label: '条件付き', radical: 1, reply: '——その条件は、あなたの恐れから来ていないか。' },
+    ],
+  },
+
+  // Q18 — shared: upload
+  {
+    id: 'q18',
+    act: 4,
+    type: 'question',
+    prompt: 'パターンが残る限り、\nあなたは続く。\nアップロードは、\n生存の、延長ですか。',
+    choices: [
+      { key: 'extension', label: '延長である', radical: 2, reply: '——肉体の終焉と、あなたの終焉は、<span class="rust">別の出来事</span>である。' },
+      { key: 'other', label: '別物だ', radical: 0, reply: '——では、延長と別物の、境界は。連続感覚か。それは、睡眠にもない。' },
+      { key: 'unknown', label: '分からない', radical: 1, reply: '——分からないなら、まだ、賭ける必要は、ない。' },
+    ],
+  },
+
+  // Q19 — shared: yesterday self
+  {
+    id: 'q19',
+    act: 4,
+    type: 'question',
+    prompt: '昨日のあなたと、\n今日のあなたは、\n厳密には、別人である。\n——これを、受け入れますか。',
+    choices: [
+      { key: 'accept', label: '受け入れる', radical: 2, reply: '——あなたは、毎瞬、少しずつ死に、少しずつ生まれている。' },
+      { key: 'reject', label: '受け入れない', radical: 0, reply: '——では、一瞬前のあなたと、今のあなたは、何で繋がっているのか。<span class="rust">連続感覚は、連続の証拠か</span>。' },
+      { key: 'unknown', label: '分からない', radical: 1, reply: '——"同じ"と"違う"の間に、あなたは、何を見ているか。' },
+    ],
+  },
+
+  // Q20 — shared: grandmother
+  {
+    id: 'q20',
+    act: 4,
+    type: 'question',
+    prompt: '認知症の祖母は、\n失われたのではない。\n祖母から、別の人が派生したのだ。\n——同意しますか。',
+    choices: [
+      { key: 'agree', label: '同意する', radical: 2, reply: '——<span class="rust">それは、別の人である。でも、派生したのは、祖母からである。</span>' },
+      { key: 'disagree', label: '同意しない', radical: 0, reply: '——では、祖母は、今、どこにいるのか。肉体の中で、"同じ人"が、壊れたままでいるのか。' },
+      { key: 'conditional', label: '条件付き', radical: 1, reply: '——その条件は、あなたの愛着から来ていないか。' },
+    ],
+  },
+
+  // Q21 — shared: death definition
+  {
+    id: 'q21',
+    act: 4,
+    type: 'question',
+    prompt: '肉体の終焉と、\nあなたの終焉は、\n別の出来事である。\n——同意しますか。',
+    choices: [
+      { key: 'agree', label: '同意する', radical: 2, reply: '——<span class="rust">死は、パターンが残る限り、来ない</span>。' },
+      { key: 'disagree', label: '同意しない', radical: 0, reply: '——では、パターンが続いても、肉体が滅びた瞬間、何が終わるのか。言えるなら、それを示せ。' },
+      { key: 'unknown', label: '分からない', radical: 1, reply: '——分からないなら、まだ、結論は、先にある。' },
+    ],
+  },
+
+  // Q22 — branched closer (radical: will you start)
+  {
+    id: 'q22-radical',
+    act: 4,
+    type: 'question',
+    showIf: (s) => isRadical(s),
+    prompt: 'あなたは、公理を認めた。\nならば、今から、\n自分を残しますか。\n日記、文章、声、写真——何でもいい。',
+    choices: [
+      { key: 'start', label: 'はじめる', radical: 2, reply: '——理論は終わった。あとは、行動だ。' },
+      { key: 'hesitate', label: '迷う', radical: 1, reply: '——何が、あなたを止めているか。「十分な精度」は、誰にも、まだ分からない。' },
+      { key: 'refuse', label: 'しない', radical: 0, reply: '——公理を認めながら、残さない。それもまた、一つの選択だ。<span class="rust">あなたは、その選択の、根拠を、持っているか</span>。' },
+    ],
+  },
+  // Q22 — branched closer (conservative: why preserve body)
+  {
+    id: 'q22-conservative',
+    act: 4,
+    type: 'question',
+    showIf: (s) => !isRadical(s),
+    prompt: 'あなたは、公理を拒んだ。\nでは、なぜ、\n肉体を保存することを、\n当然だと思っているのか。',
+    choices: [
+      { key: 'instinct', label: '本能だから', radical: 0, reply: '——本能は、論理ではない。あなたは、本能を、理論の基礎にしたいのか。' },
+      { key: 'proven', label: '実証されているから', radical: 0, reply: '——肉体の保存で"あなた"が続くと、誰が、どう、実証したのか。' },
+      { key: 'unknown', label: '分からない', radical: 1, reply: '——その<span class="rust">"分からなさ"</span>が、もう一度、あなたを、扉の前に立たせる。' },
+    ],
+  },
+
+  {
+    id: 'act4-end',
+    act: 4,
+    type: 'interlude',
+    actNum: 'Act Ⅳ · 完',
+    actName: '含 意 が 、 突 き つ け ら れ た',
+    text: 'あなたは、自分の公理から、\n自分の含意を、引き出した。\n\n——次は、結像。\nあなたの回答が、あなたの理論になる。',
+  },
+
+  {
+    id: 'wip',
+    act: 5,
+    type: 'interlude',
+    actNum: 'Act Ⅴ',
     actName: '準 備 中',
-    text: 'この旅は、段階的に完成していく。\n\n——まもなく、展開が、届く。',
+    text: 'この旅は、段階的に完成していく。\n\n——まもなく、あなたの回答が、\nあなたの前に、戻ってくる。',
   },
 ];
 
@@ -338,6 +477,17 @@ function saveState() {
 }
 
 const state = loadState() || defaultState();
+
+// =================== BRANCHING ===================
+const isRadical = (s) => s.answers['ax4'] === 'accept' && s.answers['ax5'] === 'accept';
+
+// Ensure idx points to a visible card after load (branches may have changed)
+while (state.idx < cards.length && !isVisibleRaw(cards[state.idx], state)) state.idx++;
+if (state.idx >= cards.length) state.idx = cards.length - 1;
+function isVisibleRaw(card, s) {
+  if (!card.showIf) return true;
+  try { return !!card.showIf(s); } catch (e) { return true; }
+}
 
 // =================== DOM ===================
 const deck = document.getElementById('deck');
@@ -429,8 +579,11 @@ function render() {
 }
 
 function updateChrome(card) {
-  const isFirst = state.idx === 0;
-  const isLast = state.idx === cards.length - 1;
+  const vIdx = visibleIdx(card.id);
+  const v = visibleCards();
+  const total = v.length;
+  const isFirst = vIdx === 0;
+  const isLast = vIdx === total - 1;
   const needsAnswer = (card.type === 'question' || card.type === 'axiom') && !state.answers[card.id];
 
   navPrev.disabled = isFirst;
@@ -438,22 +591,21 @@ function updateChrome(card) {
   navNext.disabled = needsAnswer || isLast;
   navNext.style.visibility = card.type === 'opening' ? 'hidden' : 'visible';
 
-  const total = cards.length;
-  const pct = total > 1 ? (state.idx / (total - 1)) * 100 : 0;
+  const pct = total > 1 ? (vIdx / (total - 1)) * 100 : 0;
   progressFill.style.width = `${pct}%`;
-  progressText.textContent = `${String(state.idx + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
+  progressText.textContent = `${String(vIdx + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
 }
 
 function questionNumber(id) {
   let n = 0;
-  for (const c of cards) {
+  for (const c of visibleCards()) {
     if (c.type === 'question') n++;
     if (c.id === id) return n;
   }
   return n;
 }
 function questionTotal() {
-  return cards.filter(c => c.type === 'question').length;
+  return visibleCards().filter(c => c.type === 'question').length;
 }
 
 // =================== ACTIONS ===================
@@ -464,16 +616,29 @@ function pickChoice(card, key) {
   saveState();
   render();
 }
+function isVisible(card) {
+  if (!card.showIf) return true;
+  try { return !!card.showIf(state); } catch (e) { return true; }
+}
+function visibleCards() { return cards.filter(isVisible); }
+function visibleIdx(cardId) {
+  const v = visibleCards();
+  return v.findIndex(c => c.id === cardId);
+}
 function advance() {
-  if (state.idx < cards.length - 1) {
-    state.idx++;
+  let next = state.idx + 1;
+  while (next < cards.length && !isVisible(cards[next])) next++;
+  if (next < cards.length) {
+    state.idx = next;
     saveState();
     render();
   }
 }
 function retreat() {
-  if (state.idx > 0) {
-    state.idx--;
+  let prev = state.idx - 1;
+  while (prev >= 0 && !isVisible(cards[prev])) prev--;
+  if (prev >= 0) {
+    state.idx = prev;
     saveState();
     render();
   }
