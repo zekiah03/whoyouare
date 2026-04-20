@@ -243,6 +243,38 @@ body {
   letter-spacing: 0.7em;
 }
 
+/* ============ AXIOM ============ */
+.card--axiom .ax-num {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.55em;
+  color: var(--rust);
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+}
+.card--axiom .ax-statement {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+  color: var(--paper);
+  line-height: 1.9;
+  letter-spacing: 0.08em;
+  margin-bottom: 2.2rem;
+  font-weight: 700;
+}
+.card--axiom .ax-body {
+  font-family: var(--serif);
+  font-size: clamp(0.95rem, 1.3vw, 1.05rem);
+  color: var(--ink);
+  line-height: 2.2;
+  letter-spacing: 0.05em;
+  padding-left: 1.3rem;
+  border-left: 1px solid var(--line);
+  margin-bottom: 2.8rem;
+}
+.card--axiom .ax-body .rust { color: var(--rust); }
+.choices--compact { gap: 0.4rem; }
+.choices--compact .choice { padding: 0.9rem 1.3rem; font-size: 1rem; }
+
 /* ============ INTERLUDE ============ */
 .card--interlude {
   text-align: center;

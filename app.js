@@ -213,13 +213,109 @@ const cards = [
     actName: '直 観 は 、 砕 け た',
     text: 'あなたの答えは、一貫していたか。\n矛盾していたか。\n\n——次は、建設。\n砕けた直観の上に、公理を置く。',
   },
+
+  // ============ Act Ⅲ. 建 設 (公理①〜⑥) ============
   {
-    id: 'wip',
+    id: 'act3-intro',
     act: 3,
     type: 'interlude',
-    actNum: 'Act Ⅲ — Ⅴ',
+    actNum: 'Act Ⅲ',
+    actName: '建 設',
+    text: '六つの公理を、一つずつ置く。\n——認めるか、認めないか。\n条件付き、は、まだ許される。',
+  },
+  {
+    id: 'ax1',
+    act: 3,
+    type: 'axiom',
+    axNum: '公 理 ①',
+    statement: 'あなたは、\n環境で動く計算機である。',
+    detail: '入力は、光・音・温度・ホルモン・他者の言葉。<br>処理は、遺伝と学習が編んだ、ルールの束。<br>出力は、判断・感情・行動。<br><span class="rust">「意志」とは、入力の別名である。</span>',
+    choices: [
+      { key: 'accept', label: '認める', radical: 2, reply: '——では、以後、この上で話を進める。' },
+      { key: 'reject', label: '認めない', radical: 0, reply: '——ならば、あなたの意志は、どこから来たか。<span class="rust">入力にも遺伝にも学習にも由来しない</span>、純粋な発生源を、示せるか。' },
+      { key: 'conditional', label: '条件付き', radical: 1, reply: '——その条件は、覚えておくといい。後で、もう一度、問われる。' },
+    ],
+  },
+  {
+    id: 'ax2',
+    act: 3,
+    type: 'axiom',
+    axNum: '公 理 ②',
+    statement: 'ノイズは、機能である。',
+    detail: '感情は、行動の強化と抑制。<br>忘却は、情報の圧縮と最適化。<br>主観は、計算資源の配分。<br><span class="rust">それらは、欠陥ではない。あなたを美しくしている装置である。</span>',
+    choices: [
+      { key: 'accept', label: '認める', radical: 2, reply: '——あなたの「弱さ」は、機能として、設計されている。' },
+      { key: 'reject', label: '認めない', radical: 0, reply: '——では、感情・忘却・主観を、すべて取り除いたあなたは、<span class="rust">まだ、あなたか</span>。' },
+      { key: 'conditional', label: '条件付き', radical: 1, reply: '——ノイズが機能である線引きは、あなたの中で、どこにある。' },
+    ],
+  },
+  {
+    id: 'ax3',
+    act: 3,
+    type: 'axiom',
+    axNum: '公 理 ③',
+    statement: '主観は、\n自己参照的計算である。',
+    detail: 'クオリアは、神秘ではない。<br>システムが、自分の状態を、自分に向けて、<br>報告し続ける——その処理の名前である。<br><span class="rust">同じ処理をする実装には、同じ主観がある。</span>',
+    choices: [
+      { key: 'accept', label: '認める', radical: 2, reply: '——主観は、実装に依存しない。これが、次の公理への橋になる。' },
+      { key: 'reject', label: '認めない', radical: 0, reply: '——では、あなたの「赤」と、他人の「赤」が、同じだと<span class="rust">どうやって確かめたのか</span>。確かめられていないものを、特別視できるか。' },
+      { key: 'conditional', label: '条件付き', radical: 1, reply: '——処理の「同じさ」をどの粒度で測るかが、残された問いだ。' },
+    ],
+  },
+  {
+    id: 'ax4',
+    act: 3,
+    type: 'axiom',
+    axNum: '公 理 ④',
+    statement: '同一性は、\n区別不能性である。',
+    detail: '違いがあっても、よい。<br>区別できないなら、<span class="rust">それは「同じ」と呼ぶしかない。</span><br><br>——身近な人が、見抜けない。<br>——本人が、長く拒絶しない。<br>この二つが満ちる時、それは、あなたである。',
+    choices: [
+      { key: 'accept', label: '認める', radical: 2, reply: '——これが、理論の心臓だ。あなたは、もう、戻れない。' },
+      { key: 'reject', label: '認めない', radical: 0, reply: '——では、区別できないものを「別」と呼ぶ根拠は、何か。<span class="rust">観察可能でないものに、あなたは何を賭けているのか</span>。' },
+      { key: 'conditional', label: '条件付き', radical: 1, reply: '——「区別できる主体」をどこに置くか。それが、あなたの条件だ。' },
+    ],
+  },
+  {
+    id: 'ax5',
+    act: 3,
+    type: 'axiom',
+    axNum: '公 理 ⑤',
+    statement: '実装は、問わない。',
+    detail: '生体でも、人工でも、<br>同じパターンを走らせるなら、<br><span class="rust">それは、同じ「あなた」である。</span>',
+    choices: [
+      { key: 'accept', label: '認める', radical: 2, reply: '——炭素と珪素の境界は、消えた。' },
+      { key: 'reject', label: '認めない', radical: 0, reply: '——では、生体でなければならない根拠は。<span class="rust">パターン以外の何か</span>が、あなたを担っていると、示せるか。' },
+      { key: 'conditional', label: '条件付き', radical: 1, reply: '——その条件は、実装に何を要求しているのか。' },
+    ],
+  },
+  {
+    id: 'ax6',
+    act: 3,
+    type: 'axiom',
+    axNum: '公 理 ⑥',
+    statement: '時間も、分岐である。',
+    detail: '区別不能の間は、同じ。<br>区別可能になった瞬間に、別。<br><br>コピーが十体いれば、はじめは十人とも、あなた。<br>経験がずれた瞬間、それぞれが、別の人になる。',
+    choices: [
+      { key: 'accept', label: '認める', radical: 2, reply: '——<span class="rust">昨日のあなたと、今日のあなたは、厳密には、別人である。</span>' },
+      { key: 'reject', label: '認めない', radical: 0, reply: '——では、毎瞬書き換わるあなたを、何が繋いでいるのか。連続感覚は、連続の証拠になるか。' },
+      { key: 'conditional', label: '条件付き', radical: 1, reply: '——「区別可能」をどの粒度で測るかが、残されている。' },
+    ],
+  },
+  {
+    id: 'act3-end',
+    act: 3,
+    type: 'interlude',
+    actNum: 'Act Ⅲ · 完',
+    actName: '六 つ の 公 理 が 、 置 か れ た',
+    text: 'あなたは、何を認め、何を拒んだか。\n\n——次は、展開。\n認めた公理から、<span class="rust">論理的に何が導かれるか</span>を、\nあなた自身に、突きつける。',
+  },
+  {
+    id: 'wip',
+    act: 4,
+    type: 'interlude',
+    actNum: 'Act Ⅳ — Ⅴ',
     actName: '準 備 中',
-    text: 'この旅は、段階的に完成していく。\n\n——まもなく、公理が、届く。',
+    text: 'この旅は、段階的に完成していく。\n\n——まもなく、展開が、届く。',
   },
 ];
 
@@ -296,6 +392,25 @@ function render() {
       </div>
       ${answered ? `<div class="reply visible"><p>${card.choices.find(c => c.key === answered).reply}</p></div>` : ''}
     `;
+  } else if (card.type === 'axiom') {
+    const answered = state.answers[card.id];
+    el.innerHTML = `
+      <p class="ax-num">${card.axNum}</p>
+      <h2 class="ax-statement">${nl2br(card.statement)}</h2>
+      <div class="ax-body">${card.detail}</div>
+      <div class="choices choices--compact">
+        ${card.choices.map((c, i) => {
+          const isPicked = answered === c.key;
+          const cls = isPicked ? 'picked' : (answered ? 'dim' : '');
+          return `
+            <button class="choice ${cls}" data-key="${c.key}" ${answered ? 'disabled' : ''}>
+              <span class="choice-mark">${choiceMarks[i]}</span><span>${c.label}</span>
+            </button>
+          `;
+        }).join('')}
+      </div>
+      ${answered ? `<div class="reply visible"><p>${card.choices.find(c => c.key === answered).reply}</p></div>` : ''}
+    `;
   }
 
   deck.appendChild(el);
@@ -304,7 +419,7 @@ function render() {
   if (card.type === 'opening') {
     const startBtn = el.querySelector('#btn-start');
     startBtn?.addEventListener('click', advance);
-  } else if (card.type === 'question' && !state.answers[card.id]) {
+  } else if ((card.type === 'question' || card.type === 'axiom') && !state.answers[card.id]) {
     el.querySelectorAll('.choice').forEach(btn => {
       btn.addEventListener('click', () => pickChoice(card, btn.dataset.key));
     });
@@ -316,7 +431,7 @@ function render() {
 function updateChrome(card) {
   const isFirst = state.idx === 0;
   const isLast = state.idx === cards.length - 1;
-  const needsAnswer = card.type === 'question' && !state.answers[card.id];
+  const needsAnswer = (card.type === 'question' || card.type === 'axiom') && !state.answers[card.id];
 
   navPrev.disabled = isFirst;
   navPrev.style.visibility = card.type === 'opening' ? 'hidden' : 'visible';
