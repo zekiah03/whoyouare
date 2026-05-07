@@ -542,6 +542,8 @@ const navPrev = document.getElementById('nav-prev');
 const navNext = document.getElementById('nav-next');
 const navHint = document.getElementById('nav-hint');
 
+let _twinContributed = false;
+
 // =================== RENDER ===================
 const actRoman = ['', 'Ⅰ', 'Ⅱ', 'Ⅲ', 'Ⅳ', 'Ⅴ'];
 const choiceMarks = ['a', 'b', 'c', 'd'];
@@ -935,6 +937,17 @@ function renderPortrait() {
   } else {
     archetype = '境 目 に、 立 つ 人';
     archetypeBody = 'あなたは、パターンと身体、時間の一貫と分岐、区別の「同じ」と「違う」——<span class="rust">その全ての境目に、立っている</span>。決めないこと、それ自体が、あなたの答えだ。';
+  }
+
+  if (!_twinContributed && typeof window.contributeToTwin === 'function') {
+    _twinContributed = true;
+    window.contributeToTwin('whoyouare', {
+      archetype: archetype.replace(/ /g, ''),
+      radicalPct: Math.round(computeRadicalScore().ratio * 100),
+      avgPct: Math.round(avg * 100),
+      uncertaintyPct: Math.round(uncR * 100),
+      dimensions: Object.fromEntries(Object.entries(dims).map(([k, d]) => [k, Math.round(d.ratio * 100)])),
+    });
   }
 
   const strongDim = highest[1].ratio - lowest[1].ratio > 0.3
